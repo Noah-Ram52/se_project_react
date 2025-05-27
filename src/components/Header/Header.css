@@ -1,0 +1,41 @@
+@font-face {
+  src: url("../../assets/font_images/CabinetGrotesk-Regular.woff")
+    format("woff");
+  font-family: "Cabinet Grotesk";
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 32px 0 28px;
+}
+
+.header__logo {
+  margin-right: 24px;
+}
+
+.header__add-clothes-btn {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  margin: 0 20px 0 auto;
+  border: transparent;
+  background: transparent;
+}
+
+.header__date-and-location {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header__user-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__username {
+  font-family: Cabinet Grotesk, sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
