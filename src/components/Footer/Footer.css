@@ -1,0 +1,16 @@
+.footer {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 85px 0 24px;
+}
+
+.footer__text,
+.footer__year {
+  line-height: 20px;
+}

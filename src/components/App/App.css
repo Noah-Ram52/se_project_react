@@ -1,9 +1,11 @@
 .page {
   background-color: #f3f3f3;
+  min-height: 100vh;
 }
 
 .page__content {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 20px;
+  background-color: #f3f3f3;
 }

@@ -1,13 +1,25 @@
+.card {
+  position: relative;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+}
+
 .weather__images {
   max-width: 328px;
   border-radius: 18px;
+  border: 1px solid #c0c0c0;
 }
 
 .weather__cards-text {
   font-family: "Cabinet Grotesk", sans-serif;
   font-weight: 700;
   text-align: center;
-  position: relative;
-
-  top: 65px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  color: #00000099;
 }
