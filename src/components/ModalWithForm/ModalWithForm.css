@@ -85,7 +85,7 @@
   color: #00000080;
 }
 
-.modal__radio-input:checked + .modal__label_type_radio:checked {
+.modal__label_type_radio:hover {
   color: black;
 }
 

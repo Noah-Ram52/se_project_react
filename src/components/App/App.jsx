@@ -5,10 +5,17 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import ItemModal from "../ItemModal/ItemModal";
 
 function App() {
-  const [weatherData, setWeatherData] = useState({ type: "hot" });
+  const [weatherData, setWeatherData] = useState({ type: "cold" });
   const [activeModal, setActiveModal] = useState("");
+  const [selectedCard, setSelectedCard] = useState({});
+
+  const handleCardClick = (card) => {
+    setActiveModal("preview");
+    setSelectedCard(card);
+  };
 
   const handleAddClick = () => {
     setActiveModal("add-garment");
@@ -21,8 +28,15 @@ function App() {
   return (
     <div className="page">
       <div className="page__content">
-        <Header handleAddClick={handleAddClick} />
-        <Main weatherData={weatherData} onAddButtonClick={setActiveModal} />
+        <Header
+          handleAddClick={handleAddClick}
+          handleCardClick={handleCardClick}
+        />
+        <Main
+          weatherData={weatherData}
+          onAddButtonClick={setActiveModal}
+          handleCardClick={handleCardClick}
+        />
         <Footer />
       </div>
 
@@ -30,7 +44,7 @@ function App() {
         title="New Garment"
         buttonText="Add Garment"
         activeModal={activeModal}
-        handleCloseClick={closeActiveModal}
+        onClose={closeActiveModal}
       >
         {" "}
         <label htmlFor="name" className="modal__label">
@@ -88,6 +102,11 @@ function App() {
           </label>
         </fieldset>{" "}
       </ModalWithForm>
+      <ItemModal
+        activeModal={activeModal}
+        card={selectedCard}
+        onClose={closeActiveModal}
+      />
     </div>
   );
 }

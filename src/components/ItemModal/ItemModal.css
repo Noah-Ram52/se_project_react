@@ -1,0 +1,13 @@
+.modal__content {
+  background-color: #fff;
+  position: relative;
+  padding: 28px 28px 36px;
+  max-width: 496px;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.modal__content {
+  background-size: cover;
+}
