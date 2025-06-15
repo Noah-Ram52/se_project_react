@@ -1,3 +1,73 @@
+export const weatherOptions = [
+  {
+    day: true,
+    condition: "clear",
+    url: new URL("../assets/Day/Day_Sunny-Clear.svg", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "cloudy",
+    url: new URL("../assets/Day/Day_Cloudy.svg", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "storm",
+    url: new URL("../assets/Day/Day_Storm.svg", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "rain",
+    url: new URL("../assets/Day/Day_Rain.svg", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "snow",
+    url: new URL("../assets/Day/Day_Snow.svg", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "fog",
+    url: new URL("../assets/Day/Day_Fog.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "clear",
+    url: new URL("../assets/Night/Night_Sunny.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "cloudy",
+    url: new URL("../assets/Night/Night_Cloudy.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "storm",
+    url: new URL("../assets/Night/Night_Storm.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "rain",
+    url: new URL("../assets/Night/Night_Rain.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "snow",
+    url: new URL("../assets/Night/Night_Snow.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "fog",
+    url: new URL("../assets/Night/Night_Fog.svg", import.meta.url).href,
+  },
+];
+
+export const defaultWeatherOptions = {
+  day: { url: new URL("../assets/Day/Day_Default.svg", import.meta.url).href },
+  night: {
+    url: new URL("../assets/Night/Night_Default.svg", import.meta.url).href,
+  },
+};
+
 export const defaultClothingItems = [
   {
     _id: 0,
@@ -36,3 +106,11 @@ export const defaultClothingItems = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Coat.png?etag=298717ed89d5e40b1954a1831ae0bdd4",
   },
 ];
+
+export const coordinates = {
+  latitude: 43.028233,
+  longitude: -87.99891,
+};
+
+// Weather API key
+export const APIkey = "0c122f2434c6a317ae8c6887fccff822";

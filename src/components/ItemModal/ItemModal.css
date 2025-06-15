@@ -5,9 +5,33 @@
   max-width: 496px;
   box-sizing: border-box;
   width: 100%;
+}
+
+.modal__content_type_image {
+  padding: 0;
   border-radius: 12px;
 }
 
-.modal__content {
-  background-size: cover;
+.modal__image {
+  max-width: 100%;
+  object-fit: cover;
+  /* margin-bottom: 20px; */
+  border-radius: 12px 12px 0 0;
+}
+
+.modal__caption {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  /* top | right | bottom | left */
+  margin: 20px 0 12px 32px;
+}
+
+.modal__weather {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0 0 32px 32px;
 }
