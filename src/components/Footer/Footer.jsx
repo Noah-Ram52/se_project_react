@@ -1,5 +1,7 @@
 import "./Footer.css";
 
+new Date().getFullYear();
+
 function Footer() {
   return (
     <footer className="footer">
