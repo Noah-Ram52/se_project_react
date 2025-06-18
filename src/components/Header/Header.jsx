@@ -16,7 +16,9 @@ function Header({ handleAddClick, weatherData }) {
       timeZone: "America/Chicago",
       hour: "numeric",
       minute: "2-digit",
+      second: "2-digit",
     });
+    console.log(centralTime);
     setTime(centralTime);
   }
 
