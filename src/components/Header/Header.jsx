@@ -1,6 +1,7 @@
 import "./Header.css";
 import logo from "../../assets/Logo.svg";
 import avatar from "../../assets/avatar.svg";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { useState } from "react";
 
 function Header({ handleAddClick, weatherData }) {
@@ -30,9 +31,13 @@ function Header({ handleAddClick, weatherData }) {
   return (
     <header className="header">
       <img src={logo} alt="Header Logo" className="header__logo" />
-      <p className="header__date-time-and-location">
+      <div className="header__date-time-and-location">
         {currentDate}, {weatherData.city}, {time}
-      </p>
+      </div>
+
+      {/* Switching between Fahrenheit and Celsius */}
+
+      <ToggleSwitch />
       <button
         onClick={handleAddClick}
         type="button"
