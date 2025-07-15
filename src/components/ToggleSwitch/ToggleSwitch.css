@@ -1,12 +1,4 @@
-@font-face {
-  src: url("../../assets/font_images/CabinetGrotesk-Regular.woff")
-    format("woff");
-  font-family: "Cabinet Grotesk";
-}
-
-.toggle__position {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+.toggle-switch {
+  width: 56px;
+  height: 28px;
 }
