@@ -108,3 +108,7 @@
   background-color: #0000004d;
   color: #fff;
 }
+
+.modal__submit:hover {
+  background-color: #000000;
+}

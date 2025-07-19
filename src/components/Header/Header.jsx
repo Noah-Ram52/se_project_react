@@ -19,7 +19,7 @@ function Header({ handleAddClick, weatherData }) {
       minute: "2-digit",
       second: "2-digit",
     });
-    console.log(centralTime);
+
     setTime(centralTime);
   }
 
@@ -31,24 +31,34 @@ function Header({ handleAddClick, weatherData }) {
   return (
     <header className="header">
       <img src={logo} alt="Header Logo" className="header__logo" />
-      <div className="header__date-time-and-location">
-        {currentDate}, {weatherData.city}, {time}
-      </div>
+      <div className="header__content">
+        <div className="header__date-time-and-location">
+          {currentDate}, {weatherData.city}, {time}
+        </div>
 
-      {/* Switching between Fahrenheit and Celsius */}
+        <div className="header__toggle-switch-and-add-btn">
+          {/* Switching between Fahrenheit and Celsius */}
 
-      <ToggleSwitch />
-      <button
-        onClick={handleAddClick}
-        type="button"
-        className="header__add-clothes-btn"
-      >
-        + Add Clothes
-      </button>
+          <ToggleSwitch />
 
-      <div className="header__user-container">
-        <p className="header__username">Terrence Tegegne</p>
-        <img src={avatar} alt="Terrence Tegegne" className="header__avatar" />
+          {/* Displaying weather condition icon */}
+          <button
+            onClick={handleAddClick}
+            type="button"
+            className="header__add-clothes-btn"
+          >
+            + Add Clothes
+          </button>
+
+          <div className="header__user-container">
+            <p className="header__username">Terrence Tegegne</p>
+            <img
+              src={avatar}
+              alt="Terrence Tegegne"
+              className="header__avatar"
+            />
+          </div>
+        </div>
       </div>
     </header>
   );
