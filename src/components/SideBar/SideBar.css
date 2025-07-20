@@ -1,0 +1,9 @@
+.sidebar {
+  display: flex;
+}
+
+.sidebar__username {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: 16px;
+}

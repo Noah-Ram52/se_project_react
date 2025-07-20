@@ -9,6 +9,7 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
+import Profile from "../Profile/Profile";
 import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { defaultClothingItems } from "../../utils/constants";
@@ -89,7 +90,7 @@ function App() {
           />
           <Routes>
             <Route
-              path="/"
+              path="/se_project_react/"
               element={
                 <Main
                   weatherData={weatherData}
@@ -99,7 +100,10 @@ function App() {
                 />
               }
             />
-            <Route path="/profile" element={<p>Profile</p>} />
+            <Route
+              path="/se_project_react/profile"
+              element={<Profile handleCardClick={handleCardClick} />}
+            />
           </Routes>
 
           <Footer />
