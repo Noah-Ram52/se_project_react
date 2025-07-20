@@ -20,7 +20,7 @@ function ClothesSection({ handleCardClick }) {
                 key={item._id}
                 item={item}
                 // TODO - pass as prop
-                handleCardClick={handleCardClick}
+                onCardClick={handleCardClick}
               />
             );
           })}
