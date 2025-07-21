@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getWeather, filterWeatherData } from "../../utils/weatherAPI";
 import { Routes, Route } from "react-router-dom";
 import { getTime, APIkeyTime } from "../../utils/timeAPI";
+import { getItems, postItems, deleteItems } from "../../utils/api";
 
 import "./App.css";
 import { APIkey, coordinates } from "../../utils/constants";
@@ -55,14 +56,37 @@ function App() {
     setActiveModal("");
   };
 
+  // POST request sending the new item to the server
+  // and updating the clothingItems state with the new item
+  // Connected to the api.js fileF
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    // update clothingItems array
-    setClothingItems((prevItems) => [
-      { name, link: imageUrl, weather },
-      ...prevItems,
-    ]);
-    // close the modal
-    closeActiveModal();
+    postItems({ name, imageUrl, weather })
+      .then((newItem) => {
+        // update clothingItems array
+        setClothingItems((prevItems) => [
+          newItem,
+          // {
+          //   name: newItem.name,
+          //   link: newItem.imageUrl,
+          //   weather: newItem.weather,
+          // },
+          ...prevItems,
+        ]);
+        // close the modal
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  const handleDeleteItem = (id) => {
+    deleteItems(id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== id)
+        );
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   // useEffect() references the coordinates and API key from constants.js & weatherAPI.js
@@ -72,6 +96,21 @@ function App() {
       .then((data) => {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  }, []);
+
+  // useEffect() Makes Images disappear
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        setClothingItems(
+          data.map((item) => ({
+            ...item,
+            link: item.imageUrl, // ensure link is always present
+          }))
+        );
       })
       .catch(console.error);
   }, []);
@@ -119,6 +158,7 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           onClose={closeActiveModal}
+          onDeleteItem={handleDeleteItem}
         />
       </div>
     </currentTemperatureUnitContext.Provider>

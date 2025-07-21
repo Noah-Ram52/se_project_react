@@ -1,11 +1,21 @@
 import "./ItemModal.css";
 import closeButton from "../../assets/close__weather-image.svg";
 
-function ItemModal({ activeModal, onClose, card }) {
+function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
+  // DELETE request handler
+  console.log("Deleting card:", card);
+  const handleDelete = () => {
+    if (card && card._id) {
+      onDeleteItem(card._id);
+    } else {
+      onClose(); // fallback: just close if no id
+    }
+  };
+
   return (
     <div className={`modal ${activeModal === "preview" && "modal_opened"}`}>
       <div className="modal__content modal__content_type_image">
-        <button onClick={onClose} type="button" className="modal__close">
+        <button onClick={handleDelete} type="button" className="modal__close">
           <img src={closeButton} alt="Close__Button" />
         </button>
 
