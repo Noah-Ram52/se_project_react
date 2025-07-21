@@ -1,6 +1,6 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AddItemModal({
   onClose,
@@ -8,7 +8,7 @@ export default function AddItemModal({
   onAddItemModalSubmit,
 }) {
   const [name, setName] = useState("");
-  const [imageUrl, setimageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
 
   const handleNameChange = (e) => {
@@ -16,7 +16,7 @@ export default function AddItemModal({
   };
 
   const handleImageUrlChange = (e) => {
-    setimageUrl(e.target.value);
+    setImageUrl(e.target.value);
   };
 
   const handleWeatherChange = (e) => {
@@ -29,10 +29,21 @@ export default function AddItemModal({
     // update clothingItems array
     onAddItemModalSubmit({ name, imageUrl, weather });
     // empty the inputs
-    setName("");
-    setimageUrl("");
-    setWeather("");
+    // setName("");
+    // setimageUrl("");
+    // setWeather("");
   };
+
+  // useEffect needs to imported from react. Shown on line 3.
+  // useEffect has to be outside of handleSubmit to work properly
+  // For useEffect to work properly, it should be outside of handleSubmit
+  //  Also you need to reset the state when the modal opens
+
+  useEffect(() => {
+    setName("");
+    setImageUrl("");
+    setWeather("");
+  }, [isOpen]); // triggered whenever the modal opens
 
   return (
     <ModalWithForm

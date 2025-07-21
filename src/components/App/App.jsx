@@ -64,13 +64,13 @@ function App() {
       .then((newItem) => {
         // update clothingItems array
         setClothingItems((prevItems) => [
-          newItem,
+          { ...newItem, link: newItem.imageUrl },
+          ...prevItems,
           // {
           //   name: newItem.name,
           //   link: newItem.imageUrl,
           //   weather: newItem.weather,
           // },
-          ...prevItems,
         ]);
         // close the modal
         closeActiveModal();
@@ -135,13 +135,22 @@ function App() {
                   weatherData={weatherData}
                   onAddButtonClick={setActiveModal}
                   handleCardClick={handleCardClick}
+                  // Pass clothingItems as a prop to Main
+                  // Then go to Profile.jsx and pass it to ClothesSection tag
                   clothingItems={clothingItems}
                 />
               }
             />
             <Route
               path="/profile"
-              element={<Profile handleCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  handleCardClick={handleCardClick}
+                  // Use the onAddClick prop to open the modal
+                  onAddClick={handleAddClick}
+                  clothingItems={clothingItems}
+                />
+              }
             />
           </Routes>
 

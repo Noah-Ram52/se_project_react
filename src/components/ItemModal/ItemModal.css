@@ -25,7 +25,7 @@
   font-size: 20px;
   line-height: 24px;
   /* top | right | bottom | left */
-  margin: 20px 0 12px 32px;
+  margin: 20px 0 12px 0px;
 }
 
 .modal__weather {
@@ -33,5 +33,23 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  margin: 0 0 32px 32px;
+  margin: 0 0 32px;
+}
+
+.modal__footer {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+}
+
+.modal__delete_item {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  position: relative;
+  bottom: 36px;
+  color: rgba(255, 77, 0, 1);
+  margin-left: auto;
+  border: transparent;
+  background: transparent;
+  font-size: 16px;
 }

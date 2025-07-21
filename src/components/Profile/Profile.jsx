@@ -12,7 +12,13 @@ function Profile({ handleCardClick }) {
         <SideBar />
       </section>
       <section className="profile__clothing-items">
-        <ClothesSection handleCardClick={handleCardClick} />
+        {/* Pass clothingItems as a prop to ClothesSection, then pass to
+        ClothesSection.jsx */}
+        {/* Then go to ClothesSection.jsx and use clothingItems prop */}
+        <ClothesSection
+          handleCardClick={handleCardClick}
+          clothingItems={clothingItems}
+        />
       </section>
     </div>
   );
