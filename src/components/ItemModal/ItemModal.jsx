@@ -3,7 +3,7 @@ import closeButton from "../../assets/close__weather-image.svg";
 
 function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
   // DELETE request handler
-  console.log("Deleting card:", card);
+
   const handleDelete = () => {
     if (card && card._id) {
       onDeleteItem(card._id);
@@ -12,9 +12,17 @@ function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
     }
   };
 
+  if (activeModal !== "preview") return null;
+
   return (
-    <div className={`modal ${activeModal === "preview" && "modal_opened"}`}>
-      <div className="modal__content modal__content_type_image">
+    <div
+      className={`modal ${activeModal === "preview" && "modal_opened"}`}
+      onClick={onClose}
+    >
+      <div
+        className="modal__content modal__content_type_image"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button onClick={onClose} type="button" className="modal__close">
           <img src={closeButton} alt="Close__Button" />
         </button>
