@@ -18,7 +18,7 @@ function Profile({ handleCardClick, clothingItems, onAddClick }) {
         <ClothesSection
           handleCardClick={handleCardClick}
           clothingItems={clothingItems}
-          onClick={onAddClick}
+          onAddClick={onAddClick}
         />
       </section>
     </div>
