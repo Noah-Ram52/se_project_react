@@ -1,7 +1,23 @@
+import { useEffect, useState } from "react";
 import "./ItemModal.css";
 import closeButton from "../../assets/close__weather-image.svg";
 
 function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Handle fade-in and fade-out
+  useEffect(() => {
+    if (activeModal === "preview") {
+      setIsVisible(true);
+    } else if (isVisible) {
+      // Wait for fade-out animation before unmounting
+      const timeout = setTimeout(() => setIsVisible(false), 300); // 300ms matches CSS transition
+      return () => clearTimeout(timeout);
+    }
+  }, [activeModal]);
+
+  if (!isVisible && activeModal !== "preview") return null;
+
   // DELETE request handler
 
   const handleDelete = () => {
@@ -12,11 +28,9 @@ function ItemModal({ activeModal, onClose, card, onDeleteItem }) {
     }
   };
 
-  if (activeModal !== "preview") return null;
-
   return (
     <div
-      className={`modal ${activeModal === "preview" && "modal_opened"}`}
+      className={`modal ${activeModal === "preview" && "modal_opened"} `}
       onClick={onClose}
     >
       <div

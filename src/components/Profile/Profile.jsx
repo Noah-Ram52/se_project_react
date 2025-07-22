@@ -5,7 +5,7 @@ import "./Profile.css";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 
-function Profile({ handleCardClick }) {
+function Profile({ handleCardClick, clothingItems }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
