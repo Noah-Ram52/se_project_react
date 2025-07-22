@@ -115,6 +115,28 @@ function App() {
       .catch(console.error);
   }, []);
 
+  // Escape key closes the modal. This useEffect listens for the Escape key press
+  // and closes the modal if it's open. It also cleans up the event listener when the component unmounts or the modal closes
+  // component unmounts or the modal closes. This is a common pattern to handle keyboard events in React
+
+  useEffect(() => {
+    if (!activeModal) return; // Exit early if no modal is open
+
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    // Add the event listener when a modal is active
+    document.addEventListener("keydown", handleEscClose);
+
+    // Clean up the listener when the modal is closed or the component unmounts
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]); // Re-run effect when activeModal changes
+
   return (
     // Value to toggle between Fahrenheit and Celsius
     <currentTemperatureUnitContext.Provider
