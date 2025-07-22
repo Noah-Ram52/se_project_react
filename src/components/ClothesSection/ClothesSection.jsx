@@ -14,7 +14,7 @@ function ClothesSection({ handleCardClick, onAddClick, clothingItems }) {
           <button
             className="clothes-section__adding_items"
             // This button will open the modal to add a new item
-            onClick={onAddClick}
+            onAddClick={onAddClick}
           >
             + Add New
           </button>
