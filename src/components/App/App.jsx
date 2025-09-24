@@ -102,26 +102,14 @@ function App() {
 
   // useEffect() Makes Images disappear
 
-  // useEffect(() => {
-  //   getItems()
-  //     .then((data) => {
-  //       setClothingItems(
-  //         data.map((item) => ({
-  //           ...item,
-  //           link: item.imageUrl, // ensure link is always present
-  //         }))
-  //       );
-  //     })
-  //     .catch(console.error);
-  // }, []);
-
   useEffect(() => {
     getItems()
-      .then((data) => {
-        // ✅ Ensure we always use an array (fallback if API sends wrong shape)
-        const itemsArray = Array.isArray(data) ? data : data.items || [];
+      .then(({ data }) => {
+        // Makes sure data is an array
+        const items = Array.isArray(data) ? data : [];
+
         setClothingItems(
-          itemsArray.map((item) => ({
+          items.map((item) => ({
             ...item,
             link: item.imageUrl,
           }))
