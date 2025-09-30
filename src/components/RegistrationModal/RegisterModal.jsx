@@ -37,6 +37,68 @@ function RegisterModal({
   const [errors, setErrors] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setErrors("");
+    const { email, password, name, avatarUrl } = formData;
+    if (!email.trim() || !password || !name.trim() || !avatarUrl.trim()) {
+      setErrors("Please fill in all required fields.");
+      return;
+    }
+
+    // normalize avatar URL (try adding https:// if missing)
+    let normalizedAvatar = avatarUrl.trim();
+    try {
+      new URL(normalizedAvatar);
+    } catch {
+      if (!/^https?:\/\//i.test(normalizedAvatar)) {
+        normalizedAvatar = `https://${normalizedAvatar}`;
+        try {
+          new URL(normalizedAvatar);
+        } catch {
+          setErrors("Invalid avatar URL.");
+          return;
+        }
+      } else {
+        setErrors("Invalid avatar URL.");
+        return;
+      }
+    }
+
+    setIsSubmitting(true);
+    try {
+      await signup({
+        name: name.trim(),
+        avatar: normalizedAvatar,
+        email: email.trim(),
+        password,
+      });
+      const signinRes = await signin({ email: email.trim(), password });
+      const token = signinRes?.token;
+      if (token) {
+        if (typeof onAuthLogin === "function") {
+          await onAuthLogin(token);
+        } else {
+          saveToken(token);
+          if (typeof setIsLoggedIn === "function") setIsLoggedIn(true);
+        }
+      }
+      setShowSignup(false);
+      setFormData({ email: "", password: "", name: "", avatarUrl: "" });
+    } catch (err) {
+      setErrors(
+        typeof err === "string" ? err : err?.message || "Signup failed."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   useEffect(() => {
     function updateCentralDaylightTime() {
       const now = new Date();
@@ -53,11 +115,6 @@ function RegisterModal({
     const interval = setInterval(updateCentralDaylightTime, 1000);
     return () => clearInterval(interval);
   }, []);
-
-  // function handleChange(e) {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({ ...prev, [name]: value }));
-  // }
 
   return (
     <div className="registration">
