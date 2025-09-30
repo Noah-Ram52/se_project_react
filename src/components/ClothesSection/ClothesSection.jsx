@@ -5,7 +5,7 @@ import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
 
 // Pass clothingItems as a prop to ClothesSection
-function ClothesSection({ handleCardClick, onAddClick, clothingItems }) {
+function ClothesSection({ handleCardClick, onAddClick, clothingItems = [] }) {
   return (
     <div className="clothes-section">
       <div>

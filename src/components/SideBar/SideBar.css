@@ -1,9 +1,57 @@
 .sidebar {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  box-sizing: border-box;
 }
 
-.sidebar__username {
+.sidebar__profile {
   display: flex;
-  flex-shrink: 0;
-  margin-left: 16px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sidebar__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar__name {
+  font-size: 16px;
+  margin: 0;
+}
+
+.sidebar__nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar__link_profile {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #000;
+  cursor: pointer;
+}
+
+.sidebar__link_logout {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #000;
+  cursor: pointer;
 }

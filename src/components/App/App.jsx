@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getWeather, filterWeatherData } from "../../utils/weatherAPI";
-import { Routes, Route } from "react-router-dom";
-import { getTime, APIkeyTime } from "../../utils/timeAPI";
-import { getItems, postItems, deleteItems } from "../../utils/api";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import {
+  getItems,
+  postItems,
+  deleteItems,
+  getUser,
+  updateUser,
+} from "../../utils/api";
+import * as api from "../../utils/api";
+import * as auth from "../../utils/auth";
 
 import "./App.css";
 import { APIkey, coordinates } from "../../utils/constants";
@@ -12,10 +19,19 @@ import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import RegisterModal from "../RegistrationModal/RegisterModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { defaultClothingItems } from "../../utils/constants";
 
 function App() {
+  // React Router code to hide the header on the login page
+  // useLocation hook gives access to the current URL path
+  // Then we check if the current path is "/"
+  // If it is, we set hideHeader to true, otherwise false
+  // This way, the header will be hidden only on the login page
+
   // State Variable for objects:
   // Recommend to not use an empty object as a default value
 
@@ -56,21 +72,61 @@ function App() {
     setActiveModal("");
   };
 
+  // UseEffect to check for a valid JWT token in localStorage on app mount
+  // If a token is found, it calls getUser to validate the token and fetch user data
+  // If valid, it sets the current user and marks the user as logged in
+  // If invalid or an error occurs, it removes the token and marks the user as logged out
+  // This is for the profiile image and name to show up on the profile page
+  useEffect(() => {
+    const token = (() => {
+      try {
+        return localStorage.getItem("jwt");
+      } catch (e) {
+        return null;
+      }
+    })();
+    if (!token) return;
+    getUser(token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        try {
+          localStorage.removeItem("jwt");
+        } catch (e) {
+          void e;
+        }
+        setIsLoggedIn(false);
+      });
+  }, []);
+
+  // Function to handle user profile updates
+  // It calls updateUser from api.js and updates the currentUser state
+  // This function is passed down to the RegisterModal component for profile updates
+  // after registration and to the Profile component for profile edits
+  // This ensures that any changes to the user's profile are reflected in the app's state
+  // and UI immediately after the update is successful
+  const handleUpdateUser = ({ name, avatar }) => {
+    return updateUser({ name, avatar }).then((user) => {
+      setCurrentUser(user);
+      return user;
+    });
+  };
+
   // POST request sending the new item to the server
   // and updating the clothingItems state with the new item
   // Connected to the api.js fileF
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     postItems({ name, imageUrl, weather })
       .then((newItem) => {
+        // DEBUG: log server response shape to help diagnose missing UI updates
+        // Remove or lower verbosity after confirming the response format
+
         // update clothingItems array
         setClothingItems((prevItems) => [
           { ...newItem, link: newItem.imageUrl },
           ...prevItems,
-          // {
-          //   name: newItem.name,
-          //   link: newItem.imageUrl,
-          //   weather: newItem.weather,
-          // },
         ]);
         // close the modal
         closeActiveModal();
@@ -140,62 +196,178 @@ function App() {
     };
   }, [activeModal]); // Re-run effect when activeModal changes
 
+  const navigate = useNavigate();
+
+  // State variable and function to manage user login status
+  // eslint-disable-next-line no-console
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  // on app start check stored token
+  useEffect(() => {
+    const token = auth.getToken();
+    if (!token) return;
+    api
+      .getUser(token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        auth.removeToken();
+        setCurrentUser(null);
+        setIsLoggedIn(false);
+      });
+  }, []);
+
+  // Called after sign-in (or after signup+auto-login)
+  function handleAuthLogin(token) {
+    if (token) auth.saveToken(token);
+    return api
+      .getUser(token)
+      .then((user) => {
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+        return user;
+      })
+      .catch((err) => {
+        auth.removeToken();
+        setCurrentUser(null);
+        setIsLoggedIn(false);
+        throw err;
+      });
+  }
+
+  function handleLogout() {
+    auth.removeToken();
+    setCurrentUser(null);
+    setIsLoggedIn(false);
+    navigate("/");
+  }
+
+  // On mount: if there's a token in localStorage, verify it with the server
+  useEffect(() => {
+    const token = (() => {
+      try {
+        return localStorage.getItem("jwt");
+      } catch (e) {
+        return null;
+      }
+    })();
+
+    if (!token) return;
+
+    // Validate token by calling /users/me
+    fetch("http://localhost:3001/users/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then((user) => {
+        // server returned current user info
+        setCurrentUser(user);
+        setIsLoggedIn(true);
+      })
+      .catch(() => {
+        // token invalid or network error: remove stored token
+        try {
+          localStorage.removeItem("jwt");
+        } catch (e) {
+          void e;
+        }
+        setIsLoggedIn(false);
+      });
+  }, []);
+
+  const location = useLocation();
+  const hideHeader = location.pathname === "/";
+
   return (
     // Value to toggle between Fahrenheit and Celsius
-    <currentTemperatureUnitContext.Provider
-      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-    >
-      <div className="page">
-        <div className="page__content">
-          <Header
-            handleAddClick={handleAddClick}
-            handleCardClick={handleCardClick}
-            weatherData={weatherData}
+    <CurrentUserContext.Provider value={currentUser}>
+      <currentTemperatureUnitContext.Provider
+        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+      >
+        <div className="page">
+          <div className="page__content">
+            {!hideHeader && (
+              <Header
+                handleAddClick={handleAddClick}
+                handleCardClick={handleCardClick}
+                weatherData={weatherData}
+              />
+            )}
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <RegisterModal
+                    weatherData={weatherData}
+                    setIsLoggedIn={setIsLoggedIn}
+                    onAddButtonClick={setActiveModal}
+                    handleCardClick={handleCardClick}
+                    // Pass clothingItems as a prop to Main
+                    // Then go to Profile.jsx and pass it to ClothesSection tag
+                    clothingItems={clothingItems}
+                    handleUpdateUser={handleUpdateUser}
+                    onAuthLogin={handleAuthLogin}
+                  />
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Main
+                      weatherData={weatherData}
+                      onAddButtonClick={setActiveModal}
+                      handleCardClick={handleCardClick}
+                      // Pass clothingItems as a prop to Main
+                      // Then go to Profile.jsx and pass it to ClothesSection tag
+                      clothingItems={clothingItems}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      handleCardClick={handleCardClick}
+                      // Use the onAddClick prop to open the modal
+                      onAddClick={handleAddClick}
+                      setIsLoggedIn={setIsLoggedIn}
+                      clothingItems={clothingItems}
+                      handleUpdateUser={handleUpdateUser}
+                      setCurrentUser={setCurrentUser}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+
+            <Footer />
+          </div>
+          <AddItemModal
+            onClose={closeActiveModal}
+            isOpen={activeModal === "add-garment"}
+            activeModal={activeModal}
+            onAddItemModalSubmit={handleAddItemModalSubmit}
           />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  onAddButtonClick={setActiveModal}
-                  handleCardClick={handleCardClick}
-                  // Pass clothingItems as a prop to Main
-                  // Then go to Profile.jsx and pass it to ClothesSection tag
-                  clothingItems={clothingItems}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  handleCardClick={handleCardClick}
-                  // Use the onAddClick prop to open the modal
-                  onAddClick={handleAddClick}
-                  clothingItems={clothingItems}
-                />
-              }
-            />
-          </Routes>
 
-          <Footer />
+          <ItemModal
+            activeModal={activeModal}
+            card={selectedCard}
+            onClose={closeActiveModal}
+            onDeleteItem={handleDeleteItem}
+          />
         </div>
-        <AddItemModal
-          onClose={closeActiveModal}
-          isOpen={activeModal === "add-garment"}
-          activeModal={activeModal}
-          onAddItemModalSubmit={handleAddItemModalSubmit}
-        />
-
-        <ItemModal
-          activeModal={activeModal}
-          card={selectedCard}
-          onClose={closeActiveModal}
-          onDeleteItem={handleDeleteItem}
-        />
-      </div>
-    </currentTemperatureUnitContext.Provider>
+      </currentTemperatureUnitContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

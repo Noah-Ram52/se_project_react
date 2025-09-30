@@ -1,11 +1,18 @@
+import { useState, useContext } from "react";
+import { Link } from "react-router-dom";
+
 import "./Header.css";
 import logo from "../../assets/Logo.svg";
 import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Header({ handleAddClick, weatherData }) {
+  const currentUser = useContext(CurrentUserContext);
+  const displayName = currentUser?.name || "Terrence Tegegne";
+  const avatarSrc = currentUser?.avatar || null;
+
+  // Get current date in "Month Day" format,
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -31,11 +38,9 @@ function Header({ handleAddClick, weatherData }) {
 
   return (
     <header className="header">
-      <Link to="/">
-        {" "}
-        <img src={logo} alt="Header Logo" className="header__logo" />
-      </Link>
-
+      {/* <Link to="/"> */}{" "}
+      <img src={logo} alt="Header Logo" className="header__logo" />
+      {/* </Link> */}
       <div className="header__content">
         <div className="header__date-time-and-location">
           {currentDate}, {weatherData.city}, {time}
@@ -56,12 +61,23 @@ function Header({ handleAddClick, weatherData }) {
           </button>
           <Link to="/profile" className="header__link">
             <div className="header__user-container">
-              <p className="header__username">Terrence Tegegne</p>
-              <img
+              <p className="header__username">{displayName}</p>
+              {/* <img
                 src={avatar}
                 alt="Terrence Tegegne"
                 className="header__avatar"
-              />
+              /> */}
+              {avatarSrc ? (
+                <img
+                  src={avatarSrc}
+                  alt={displayName}
+                  className="header__avatar"
+                />
+              ) : (
+                <div className="header__avatar header__avatar--initials">
+                  {(displayName[0] || "T").toUpperCase()}
+                </div>
+              )}
             </div>
           </Link>
         </div>

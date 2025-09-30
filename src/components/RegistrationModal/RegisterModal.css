@@ -1,0 +1,161 @@
+/* Import font (same as header) */
+@font-face {
+  src: url("../../assets/font_images/CabinetGrotesk-Regular.woff")
+    format("woff");
+  font-family: "Cabinet Grotesk";
+}
+
+/* Registration page wrapper */
+.registration {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* ✅ Full-width */
+  margin: 0;
+  padding: 0;
+}
+
+/* Keep header spacing consistent with main layout */
+.registration .header {
+  width: 100%; /*  Stretches header full width */
+
+  padding: 32px 0 28px; /* Matches Header.css spacing */
+}
+
+/* Weather text styling */
+.weather__text {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 20px 0;
+  max-width: 1200px; /* ✅ Center weather text nicely */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Card section styling */
+.cards {
+  width: 100%;
+  margin-top: 20px;
+  max-width: 1200px; /* ✅ Keep cards aligned with main content */
+
+  margin-right: auto;
+}
+
+.cards__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* Avatar styling (matches Header) */
+.header__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.registration__btn-signup {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  margin: 0px 20px;
+  background: transparent;
+  border: none;
+}
+
+.registration__btn-login {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  background: transparent;
+  border: none;
+}
+
+/* Signup modal styles */
+.signup-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+}
+
+.signup-form_title {
+  margin: 0 0 24px;
+  font-size: 16px;
+}
+
+.close_signup {
+  position: relative;
+  margin: 5px 5px 0 0;
+}
+
+.signup-modal__content {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 420px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.signup-modal__close {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.signup-form label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.signup-form input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 14px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.signup-form__actions {
+  display: flex;
+  align-items: center;
+}
+
+.signup-form__submit {
+  background: #6b7280;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.signup-form__login-link {
+  background: transparent;
+  border: none;
+  color: #444;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.signup-form__error {
+  color: #b91c1c;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
