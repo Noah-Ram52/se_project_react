@@ -10,6 +10,9 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  // keep local references for convenience in JSX
+  const { email, password } = formData;
+
   if (!isOpen) return null;
 
   function handleChange(e) {
@@ -88,7 +91,11 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
           </label>
           {error && <div className="signin-form__error">{error}</div>}
           <div className="signin-form__actions">
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              type="submit"
+              disabled={isSubmitting || !email || !password}
+              className="signin-form__submit"
+            >
               {isSubmitting ? "Signing in..." : "Log In"}
             </button>
             <button

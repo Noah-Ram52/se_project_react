@@ -63,6 +63,12 @@
   color: #222;
 }
 
+.signin-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset; /* or your background color */
+  -webkit-text-fill-color: #000; /* keep text visible */
+  transition: background-color 5000s ease-in-out 0s; /* prevents flashing */
+}
+
 .signin-form input::placeholder {
   color: #9aa0a6;
 }
@@ -72,13 +78,15 @@
 }
 
 .signin-form__error {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
   color: #b91c1c;
   margin: 12px 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .signin-form__actions {
-  font-family: "cabinet grotesk", sans-serif;
+  font-family: "Cabinet Grotesk", sans-serif;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -98,8 +106,14 @@
   color: #fff;
 }
 
+.signin-form__actions button[type="submit"]:disabled {
+  background: #6b7280; /* gray */
+  cursor: not-allowed;
+}
+
 .signin-form__actions button[type="submit"]:not(:disabled) {
-  background: #6b7280;
+  background: #000; /* black */
+  cursor: pointer;
 }
 
 .signin-form__actions button:disabled {

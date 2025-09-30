@@ -9,7 +9,7 @@
 .registration {
   display: flex;
   flex-direction: column;
-  width: 100%; /* ✅ Full-width */
+  width: 100%;
   margin: 0;
   padding: 0;
 }
@@ -132,6 +132,12 @@
   font-size: 14px;
 }
 
+.signup-form input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px white inset; /* or your background color */
+  -webkit-text-fill-color: #000; /* keep text visible */
+  transition: background-color 5000s ease-in-out 0s; /* prevents flashing */
+}
+
 .signup-form__actions {
   display: flex;
   align-items: center;
@@ -143,6 +149,16 @@
   padding: 8px 14px;
   border-radius: 6px;
   border: none;
+  cursor: pointer;
+}
+
+.signup-form__submit:disabled {
+  background: #6b7280;
+  cursor: not-allowed;
+}
+
+.signup-form__submit:not(:disabled) {
+  background: #000; /* black */
   cursor: pointer;
 }
 

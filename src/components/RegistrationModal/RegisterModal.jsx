@@ -20,6 +20,7 @@ function RegisterModal({
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
+  // Format current date as "Month Day", e.g., "September 21"
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -36,6 +37,9 @@ function RegisterModal({
   });
   const [errors, setErrors] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // keep local references for convenience in JSX
+  const { email, password, name, avatarUrl } = formData;
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -245,7 +249,9 @@ function RegisterModal({
               <div className="signup-form__actions">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={
+                    isSubmitting || !email || !password || !avatarUrl || !name
+                  }
                   className="signup-form__submit"
                 >
                   {isSubmitting ? "Signing up..." : "Sign Up"}
