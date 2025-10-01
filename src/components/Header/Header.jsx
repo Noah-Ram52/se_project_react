@@ -38,7 +38,7 @@ function Header({ handleAddClick, weatherData }) {
 
   return (
     <header className="header">
-      <Link to="/login">
+      <Link to="/">
         {" "}
         <img src={logo} alt="Header Logo" className="header__logo" />
       </Link>
