@@ -1,4 +1,4 @@
-//Importing CSS styles
+// CSS styles
 import "./Profile.css";
 
 // Importing JSX (React) components

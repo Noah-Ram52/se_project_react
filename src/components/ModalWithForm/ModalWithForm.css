@@ -114,11 +114,11 @@
 }
 
 .modal__submit:disabled {
-  background: #6b7280; /* gray */
+  background: #6b7280;
   cursor: not-allowed;
 }
 
 .modal__submit:not(:disabled) {
-  background: #000; /* black */
+  background: #000;
   cursor: pointer;
 }
