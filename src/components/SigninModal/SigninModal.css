@@ -107,12 +107,12 @@
 }
 
 .signin-form__actions button[type="submit"]:disabled {
-  background: #6b7280; /* gray */
+  background: #6b7280;
   cursor: not-allowed;
 }
 
 .signin-form__actions button[type="submit"]:not(:disabled) {
-  background: #000; /* black */
+  background: #000;
   cursor: pointer;
 }
 

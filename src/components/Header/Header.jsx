@@ -38,9 +38,10 @@ function Header({ handleAddClick, weatherData }) {
 
   return (
     <header className="header">
-      {/* <Link to="/"> */}{" "}
-      <img src={logo} alt="Header Logo" className="header__logo" />
-      {/* </Link> */}
+      <Link to="/login">
+        {" "}
+        <img src={logo} alt="Header Logo" className="header__logo" />
+      </Link>
       <div className="header__content">
         <div className="header__date-time-and-location">
           {currentDate}, {weatherData.city}, {time}

@@ -258,6 +258,7 @@ function App() {
     if (!token) return;
 
     // Validate token by calling /users/me
+
     fetch("http://localhost:3001/users/me", {
       method: "GET",
       headers: {
@@ -281,6 +282,34 @@ function App() {
         setIsLoggedIn(false);
       });
   }, []);
+
+  // Like & Dislike feature for clothing items
+
+  const handleCardLike = ({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    // Check if this card is not currently liked
+    !isLiked
+      ? // if so, send a request to add the user's id to the card's likes array
+        api
+          // the first argument is the card's id
+          .addCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.log(err))
+      : // if not, send a request to remove the user's id from the card's likes array
+        api
+          // the first argument is the card's id
+          .removeCardLike(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.log(err));
+  };
 
   const location = useLocation();
   const hideHeader = location.pathname === "/";
