@@ -18,7 +18,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
-import currentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import RegisterModal from "../RegistrationModal/RegisterModal";
@@ -119,16 +119,11 @@ function App() {
   // Connected to the api.js fileF
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     postItems({ name, imageUrl, weather })
-      .then((newItem) => {
-        // DEBUG: log server response shape to help diagnose missing UI updates
-        // Remove or lower verbosity after confirming the response format
-
-        // update clothingItems array
-        setClothingItems((prevItems) => [
-          { ...newItem, link: newItem.imageUrl },
-          ...prevItems,
-        ]);
-        // close the modal
+      .then((res) => {
+        const item = res?.data ?? res;
+        const link =
+          item?.imageUrl || item?.link || item?.image || imageUrl || "";
+        setClothingItems((prevItems) => [{ ...item, link }, ...prevItems]);
         closeActiveModal();
       })
       .catch(console.error);
@@ -160,14 +155,17 @@ function App() {
 
   useEffect(() => {
     getItems()
-      .then(({ data }) => {
-        // Makes sure data is an array
-        const items = Array.isArray(data) ? data : [];
+      .then((res) => {
+        const items = Array.isArray(res)
+          ? res
+          : Array.isArray(res?.data)
+          ? res.data
+          : [];
 
         setClothingItems(
           items.map((item) => ({
             ...item,
-            link: item.imageUrl,
+            link: item.imageUrl || item.link || item.image || "",
           }))
         );
       })
@@ -245,44 +243,6 @@ function App() {
     navigate("/");
   }
 
-  // On mount: if there's a token in localStorage, verify it with the server
-  useEffect(() => {
-    const token = (() => {
-      try {
-        return localStorage.getItem("jwt");
-      } catch (e) {
-        return null;
-      }
-    })();
-
-    if (!token) return;
-
-    // Validate token by calling /users/me
-
-    fetch("http://localhost:3001/users/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-      .then((user) => {
-        // server returned current user info
-        setCurrentUser(user);
-        setIsLoggedIn(true);
-      })
-      .catch(() => {
-        // token invalid or network error: remove stored token
-        try {
-          localStorage.removeItem("jwt");
-        } catch (e) {
-          void e;
-        }
-        setIsLoggedIn(false);
-      });
-  }, []);
-
   // Like & Dislike feature for clothing items
 
   const handleCardLike = ({ id, isLiked }) => {
@@ -317,7 +277,7 @@ function App() {
   return (
     // Value to toggle between Fahrenheit and Celsius
     <CurrentUserContext.Provider value={currentUser}>
-      <currentTemperatureUnitContext.Provider
+      <CurrentTemperatureUnitContext.Provider
         value={{ currentTemperatureUnit, handleToggleSwitchChange }}
       >
         <div className="page">
@@ -357,6 +317,7 @@ function App() {
                       // Pass clothingItems as a prop to Main
                       // Then go to Profile.jsx and pass it to ClothesSection tag
                       clothingItems={clothingItems}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }
@@ -395,7 +356,7 @@ function App() {
             onDeleteItem={handleDeleteItem}
           />
         </div>
-      </currentTemperatureUnitContext.Provider>
+      </CurrentTemperatureUnitContext.Provider>
     </CurrentUserContext.Provider>
   );
 }

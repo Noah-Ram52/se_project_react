@@ -113,6 +113,12 @@
   color: #fff;
 }
 
-.modal__submit:hover {
-  background-color: #000000;
+.modal__submit:disabled {
+  background: #6b7280; /* gray */
+  cursor: not-allowed;
+}
+
+.modal__submit:not(:disabled) {
+  background: #000; /* black */
+  cursor: pointer;
 }

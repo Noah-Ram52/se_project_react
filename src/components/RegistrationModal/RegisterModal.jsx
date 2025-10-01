@@ -82,7 +82,9 @@ function RegisterModal({
         email: email.trim(),
         password,
       });
+
       const signinRes = await signin({ email: email.trim(), password });
+
       const token = signinRes?.token;
       if (token) {
         if (typeof onAuthLogin === "function") {

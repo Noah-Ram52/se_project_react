@@ -45,6 +45,8 @@ export default function AddItemModal({
     setWeather("");
   }, [isOpen]); // triggered whenever the modal opens
 
+  const isSubmitDisabled = !name.trim() || !imageUrl.trim() || !weather;
+
   return (
     <ModalWithForm
       title="New Garment"
@@ -52,6 +54,7 @@ export default function AddItemModal({
       onClose={onClose}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitDisabled}
     >
       {" "}
       <label htmlFor="name" className="modal__label">
