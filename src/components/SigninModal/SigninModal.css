@@ -54,13 +54,19 @@
 }
 
 .signin-form input {
-  width: 100%;
-  padding: 8px 4px 10px;
-  border: none;
-  border-bottom: 1px solid #d1d5db;
   outline: none;
+  width: 100%;
   font-size: 14px;
-  color: #222;
+  border: none;
+  border-bottom: 1px solid #000000;
+  margin-bottom: 24px;
+}
+
+.signin-form_password-label {
+  width: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #000000;
 }
 
 .signin-form input:-webkit-autofill {

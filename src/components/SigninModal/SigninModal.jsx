@@ -4,6 +4,8 @@ import closeButton from "../../assets/x_modal_button.svg";
 import { signin } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
+
 function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -57,62 +59,100 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
       });
   }
 
+  // return (
+  //   <div className="signin-modal">
+  //     <div className="signin-modal__content">
+  //       <button className="signin-modal__close" onClick={onClose}>
+  //         <img
+  //           src={closeButton}
+  //           className="close_signin"
+  //           alt="Close__Signup_Button"
+  //         />
+  //       </button>
+  //       <h3 className="signin__title">Log In</h3>
+  //       <form className="signin-form" onSubmit={handleSubmit}>
+  //         <label>
+  //           Email
+  //           <input
+  //             name="email"
+  //             type="email"
+  //             placeholder="Email"
+  //             value={formData.email}
+  //             onChange={handleChange}
+  //           />
+  //         </label>
+  //         <label>
+  //           Password
+  //           <input
+  //             name="password"
+  //             type="password"
+  //             placeholder="Password"
+  //             value={formData.password}
+  //             onChange={handleChange}
+  //           />
+  //         </label>
+  //         {error && <div className="signin-form__error">{error}</div>}
+  //         <div className="signin-form__actions">
+  //           <button
+  //             type="submit"
+  //             disabled={isSubmitting || !email || !password}
+  //             className="signin-form__submit"
+  //           >
+  //             {isSubmitting ? "Signing in..." : "Log In"}
+  //           </button>
+  //           <button
+  //             type="button"
+  //             className="signin-form__signup-link"
+  //             onClick={() => {
+  //               // clear any local error, then ask parent to switch to signup modal
+  //               setError("");
+  //               if (typeof onSwitchToSignup === "function") onSwitchToSignup();
+  //             }}
+  //           >
+  //             or Sign Up
+  //           </button>
+  //         </div>
+  //       </form>
+  //     </div>
+  //   </div>
+  // );
+
   return (
-    <div className="signin-modal">
-      <div className="signin-modal__content">
-        <button className="signin-modal__close" onClick={onClose}>
-          <img
-            src={closeButton}
-            className="close_signin"
-            alt="Close__Signup_Button"
-          />
-        </button>
-        <h3 className="signin__title">Log In</h3>
-        <form className="signin-form" onSubmit={handleSubmit}>
-          <label>
-            Email
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Password
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </label>
-          {error && <div className="signin-form__error">{error}</div>}
-          <div className="signin-form__actions">
-            <button
-              type="submit"
-              disabled={isSubmitting || !email || !password}
-              className="signin-form__submit"
-            >
-              {isSubmitting ? "Signing in..." : "Log In"}
-            </button>
-            <button
-              type="button"
-              className="signin-form__signup-link"
-              onClick={() => {
-                // clear any local error, then ask parent to switch to signup modal
-                setError("");
-                if (typeof onSwitchToSignup === "function") onSwitchToSignup();
-              }}
-            >
-              or Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <ModalWithForm
+      title="Log In"
+      buttonText={isSubmitting ? "Signing in..." : "Log In"}
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitting || !email || !password}
+    >
+      <label className="signin-form">
+        Email
+        <input
+          name="email"
+          type="email"
+          value={email}
+          onChange={handleChange}
+        />
+      </label>
+
+      <label>
+        Password
+        <input
+          name="password"
+          type="password"
+          value={password}
+          onChange={handleChange}
+          className="signin-form_password-label"
+        />
+      </label>
+
+      {error && <div className="signin-form__error">{error}</div>}
+
+      <button type="button" onClick={onSwitchToSignup}>
+        or Sign Up
+      </button>
+    </ModalWithForm>
   );
 }
 
