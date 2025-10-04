@@ -157,8 +157,8 @@ function App() {
   useEffect(() => {
     getItems()
       .then((res) => {
-        const items = Array.isArray(res)
-          ? res
+        const items = Array.isArray(res.items)
+          ? res.items
           : Array.isArray(res?.data)
           ? res.data
           : [];
