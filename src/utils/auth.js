@@ -1,12 +1,7 @@
-const baseUrl = "http://localhost:3001";
+// import checkResponse from api.js to avoid code duplication
+import { checkResponse } from "./api";
 
-function checkResponse(res) {
-  if (res.ok) return res.json();
-  return res
-    .json()
-    .then((body) => Promise.reject(body.message || `Error: ${res.status}`))
-    .catch(() => Promise.reject(`Error: ${res.status}`));
-}
+const baseUrl = "http://localhost:3001";
 
 function isValidAbsoluteUrl(str) {
   try {

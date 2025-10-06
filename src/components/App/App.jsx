@@ -269,7 +269,7 @@ function App() {
               cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
-          .catch((err) => console.log(err));
+          .catch(console.error);
   };
 
   const location = useLocation();
@@ -302,7 +302,6 @@ function App() {
                     // Pass clothingItems as a prop to Main
                     // Then go to Profile.jsx and pass it to ClothesSection tag
                     clothingItems={clothingItems}
-                    handleUpdateUser={handleUpdateUser}
                     onAuthLogin={handleAuthLogin}
                   />
                 }
