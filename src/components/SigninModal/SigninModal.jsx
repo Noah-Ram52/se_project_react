@@ -44,7 +44,7 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
           if (typeof onLogin === "function") onLogin(res.token);
           onClose && onClose();
           // navigate to protected route after successful login
-          navigate("/login");
+          navigate("/"); // Adjust the path as needed
         } else {
           setError("Signin succeeded but token missing.");
         }

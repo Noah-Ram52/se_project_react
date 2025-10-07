@@ -22,7 +22,6 @@ import Profile from "../Profile/Profile";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import RegisterModal from "../RegistrationModal/RegisterModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { defaultClothingItems } from "../../utils/constants";
 
@@ -273,7 +272,6 @@ function App() {
   };
 
   const location = useLocation();
-  const hideHeader = location.pathname === "/";
 
   return (
     // Value to toggle between Fahrenheit and Celsius
@@ -283,18 +281,17 @@ function App() {
       >
         <div className="page">
           <div className="page__content">
-            {!hideHeader && (
-              <Header
-                handleAddClick={handleAddClick}
-                handleCardClick={handleCardClick}
-                weatherData={weatherData}
-              />
-            )}
+            <Header
+              handleAddClick={handleAddClick}
+              handleCardClick={handleCardClick}
+              weatherData={weatherData}
+            />
+
             <Routes>
               <Route
                 path="/"
                 element={
-                  <RegisterModal
+                  <Main
                     weatherData={weatherData}
                     setIsLoggedIn={setIsLoggedIn}
                     onAddButtonClick={setActiveModal}
@@ -307,7 +304,6 @@ function App() {
                 }
               />
               <Route
-                path="/login"
                 element={
                   <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Main
@@ -350,6 +346,7 @@ function App() {
           />
 
           <ItemModal
+            isOpen={activeModal === "preview"}
             activeModal={activeModal}
             card={selectedCard}
             onClose={closeActiveModal}

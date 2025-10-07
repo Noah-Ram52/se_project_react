@@ -1,7 +1,6 @@
 import "./RegisterModal.css";
 import logo from "../../assets/Logo.svg";
 import closeButton from "../../assets/x_modal_button.svg";
-
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import ItemCard from "../ItemCard/ItemCard";
@@ -122,63 +121,9 @@ function RegisterModal({
     return () => clearInterval(interval);
   }, []);
 
+  // Log in, register, Add item modals
   return (
     <div className="registration">
-      {/* Header */}
-      <header className="header">
-        <Link to="/">
-          <img src={logo} alt="Header Logo" className="header__logo" />
-        </Link>
-
-        <div className="header__content">
-          <div className="header__date-time-and-location">
-            {currentDate}, {weatherData.city}, {time}
-          </div>
-
-          <div className="header__toggle-switch-and-add-btn">
-            <ToggleSwitch />
-            <button
-              type="button"
-              className="registration__btn-signup"
-              // Clicking the "Sign Up" button sets it to true
-              onClick={() => setShowSignup(true)}
-            >
-              Sign Up
-            </button>
-            <button
-              type="button"
-              className="registration__btn-login"
-              onClick={() => setShowSignin(true)}
-            >
-              Log In
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <WeatherCard weatherData={weatherData} />
-
-      <section className="cards">
-        <p className="weather__text">
-          Today is{" "}
-          {currentTemperatureUnit === "F"
-            ? weatherData.temp.F
-            : weatherData.temp.C}{" "}
-          &deg; {currentTemperatureUnit} / You may want to wear:
-        </p>
-        <ul className="cards__list">
-          {clothingItems
-            .filter((item) => item.weather === weatherData.type)
-            .map((item) => (
-              <ItemCard
-                key={item._id}
-                item={item}
-                onCardClick={handleCardClick}
-              />
-            ))}
-        </ul>
-      </section>
-
       {/* Sign up modal */}
       {/* Conditional rendering — 
       if showSignup is true, the modal is shown.

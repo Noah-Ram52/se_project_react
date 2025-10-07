@@ -26,7 +26,7 @@ function SideBar({ setIsLoggedIn, onEditProfile }) {
   return (
     <aside className="sidebar">
       <div className="sidebar__profile">
-        {/* <img className="sidebar__avatar" src={avatarWTWR} alt="User Avatar" /> */}
+        <img className="sidebar__avatar" src={avatarWTWR} alt="User Avatar" />
         {avatarSrc ? (
           <img className="sidebar__avatar" src={avatarSrc} alt={displayName} />
         ) : (

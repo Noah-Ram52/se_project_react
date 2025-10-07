@@ -63,11 +63,12 @@ function Header({ handleAddClick, weatherData }) {
           <Link to="/profile" className="header__link">
             <div className="header__user-container">
               <p className="header__username">{displayName}</p>
-              {/* <img
+              <img
                 src={avatar}
                 alt="Terrence Tegegne"
                 className="header__avatar"
-              /> */}
+              />
+
               {avatarSrc ? (
                 <img
                   src={avatarSrc}
@@ -75,8 +76,11 @@ function Header({ handleAddClick, weatherData }) {
                   className="header__avatar"
                 />
               ) : (
-                <div className="header__avatar header__avatar--initials">
-                  {(displayName[0] || "T").toUpperCase()}
+                // <div className="header__avatar header__avatar--initials">
+                //   {(displayName[0] || "T").toUpperCase()}
+                // </div>
+                <div className="">
+                  {/* {(displayName[0] || "T").toUpperCase()} */}
                 </div>
               )}
             </div>
