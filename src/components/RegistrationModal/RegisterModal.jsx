@@ -194,13 +194,7 @@ function RegisterModal({
               {errors && <div className="signup-form__error">{errors}</div>}
 
               <div className="signup-form__actions">
-                <button
-                  type="submit"
-                  disabled={
-                    isSubmitting || !email || !password || !avatarUrl || !name
-                  }
-                  className="signup-form__submit"
-                >
+                <button type="submit" className="signup-form__submit">
                   {isSubmitting ? "Signing up..." : "Sign Up"}
                 </button>
                 <button
