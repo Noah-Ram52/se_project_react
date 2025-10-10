@@ -27,7 +27,7 @@ function ClothesSection({ handleCardClick, onAddClick, clothingItems = [] }) {
               <ItemCard
                 key={item._id}
                 item={item}
-                // TODO - pass as prop
+                // Passes a prop from parent (Profile) to each ItemCard
                 onCardClick={handleCardClick}
               />
             );

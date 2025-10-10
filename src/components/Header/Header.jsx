@@ -6,11 +6,13 @@ import logo from "../../assets/Logo.svg";
 import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import RegisterModal from "../RegistrationModal/RegisterModal";
 
 function Header({ handleAddClick, weatherData }) {
   const currentUser = useContext(CurrentUserContext);
   const displayName = currentUser?.name || "Terrence Tegegne";
   const avatarSrc = currentUser?.avatar || null;
+  console.log("Current User in Header:", currentUser);
 
   // Get current date in "Month Day" format,
   const currentDate = new Date().toLocaleString("default", {
@@ -49,42 +51,57 @@ function Header({ handleAddClick, weatherData }) {
 
         <div className="header__toggle-switch-and-add-btn">
           {/* Switching between Fahrenheit and Celsius */}
-
           <ToggleSwitch />
-
+          {/* Set up Log In and Sign Up buttons here */}
+          {/* Is there a current user logged in? If so show avatar and name and if
+          not show Log In and Sign Up buttons */}
           {/* Displaying weather condition icon */}
-          <button
-            onClick={handleAddClick}
-            type="button"
-            className="header__add-clothes-btn"
-          >
-            + Add Clothes
-          </button>
-          <Link to="/profile" className="header__link">
-            <div className="header__user-container">
-              <p className="header__username">{displayName}</p>
-              <img
-                src={avatar}
-                alt="Terrence Tegegne"
-                className="header__avatar"
-              />
+          {currentUser ? (
+            <>
+              <button
+                onClick={handleAddClick}
+                type="button"
+                className="header__add-clothes-btn"
+              >
+                + Add Clothes
+              </button>
+              <Link to="/profile" className="header__link">
+                <div className="header__user-container">
+                  <p className="header__username">{displayName}</p>
+                  <img
+                    src={avatar}
+                    alt="Terrence Tegegne"
+                    className="header__avatar"
+                  />
 
-              {avatarSrc ? (
-                <img
-                  src={avatarSrc}
-                  alt={displayName}
-                  className="header__avatar"
-                />
-              ) : (
-                // <div className="header__avatar header__avatar--initials">
-                //   {(displayName[0] || "T").toUpperCase()}
-                // </div>
-                <div className="">
-                  {/* {(displayName[0] || "T").toUpperCase()} */}
+                  {avatarSrc ? (
+                    <img
+                      src={avatarSrc}
+                      alt={displayName}
+                      className="header__avatar"
+                    />
+                  ) : (
+                    // <div className="header__avatar header__avatar--initials">
+                    //   {(displayName[0] || "T").toUpperCase()}
+                    // </div>
+                    <div className="">
+                      {/* {(displayName[0] || "T").toUpperCase()} */}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </Link>
+              </Link>
+            </>
+          ) : (
+            // Start building sign up and sign in
+            <>
+              <div className="wtwr__accounts">
+                <button className="wtwr__accounts_signup wtwr__accounts">
+                  Sign Up
+                </button>{" "}
+                <button className=" wtwr__accounts">Sign In</button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </header>

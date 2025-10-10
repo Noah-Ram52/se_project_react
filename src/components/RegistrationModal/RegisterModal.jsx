@@ -1,19 +1,12 @@
-import "./RegisterModal.css";
-import logo from "../../assets/Logo.svg";
 import closeButton from "../../assets/x_modal_button.svg";
-import WeatherCard from "../WeatherCard/WeatherCard";
-import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
-import ItemCard from "../ItemCard/ItemCard";
 import SigninModal from "../SigninModal/SigninModal";
-import { Link } from "react-router-dom";
-import React, { useEffect, useState, useContext } from "react";
 import { signup, signin, saveToken } from "../../utils/auth";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function RegisterModal({
-  weatherData,
-  handleCardClick,
-  clothingItems,
+  // weatherData,
+  // handleCardClick,
+  // clothingItems,
   setIsLoggedIn,
   onAuthLogin, // optional: App should pass this to refresh currentUser
 }) {
@@ -144,7 +137,8 @@ function RegisterModal({
                 alt="Close__Signup_Button"
               />
             </button>
-            <h3 className="signup-form_title">Sign Up</h3>
+            {/* Commented out, not sure if needed */}
+            {/* <h3 className="signup-form_title">Sign Up</h3> */}
 
             <form className="signup-form" onSubmit={handleSubmit}>
               <label>

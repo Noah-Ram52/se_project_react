@@ -61,3 +61,15 @@
   text-decoration: none;
   color: #000;
 }
+
+.wtwr__accounts {
+  background: transparent;
+  border: none;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  padding: 0;
+}
+
+.wtwr__accounts_signup {
+  margin: 0 20px 0;
+}

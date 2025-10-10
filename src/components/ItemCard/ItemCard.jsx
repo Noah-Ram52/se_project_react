@@ -6,6 +6,8 @@ import likedIcon from "../../assets/liked_button.svg";
 function ItemCard({ item, onCardClick }) {
   const [isLiked, setIsLiked] = useState(false);
 
+  // In ItemCard we are displaying the item, but redirect to
+  // App.jsx line to see what happens when interacted
   const handleCardClick = () => {
     onCardClick(item);
   };

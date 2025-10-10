@@ -48,6 +48,8 @@ function Profile({
         ClothesSection.jsx */}
         {/* Then go to ClothesSection.jsx and use clothingItems prop */}
         <ClothesSection
+          // Profile gets handleCardClick App.jsx (the parent) and
+          // Passes it down it down to ClothesSection
           handleCardClick={handleCardClick}
           clothingItems={clothingItems}
           onAddClick={onAddClick}

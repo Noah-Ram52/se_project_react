@@ -24,6 +24,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { defaultClothingItems } from "../../utils/constants";
+import RegisterModal from "../RegistrationModal/RegisterModal";
 
 function App() {
   // React Router code to hide the header on the login page
@@ -49,7 +50,10 @@ function App() {
   // You can change it other types of strings
 
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  // The default 'useState' for activeModal and setActiveModal is "".
+  // Meaning that nothing will be submitted in its defaulted state.
   const [activeModal, setActiveModal] = useState("");
+  // Create the  array to decicde what happens
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
@@ -59,8 +63,12 @@ function App() {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
+  // Creates the arrow function
+  // In App.jsx look at line 345 for card
+  // handleCardClick is the orginal source because it is App.jsx
   const handleCardClick = (card) => {
     setActiveModal("preview");
+    // card represents the parameter of setSelectedCard
     setSelectedCard(card);
   };
 
@@ -70,6 +78,10 @@ function App() {
 
   const closeActiveModal = () => {
     setActiveModal("");
+  };
+
+  const handleSignUp = () => {
+    setActiveModal("signup");
   };
 
   // UseEffect to check for a valid JWT token in localStorage on app mount
@@ -303,26 +315,14 @@ function App() {
                   />
                 }
               />
-              <Route
-                element={
-                  <ProtectedRoute isLoggedIn={isLoggedIn}>
-                    <Main
-                      weatherData={weatherData}
-                      onAddButtonClick={setActiveModal}
-                      handleCardClick={handleCardClick}
-                      // Pass clothingItems as a prop to Main
-                      // Then go to Profile.jsx and pass it to ClothesSection tag
-                      clothingItems={clothingItems}
-                      onCardLike={handleCardLike}
-                    />
-                  </ProtectedRoute>
-                }
-              />
+              {/* ProtectedRoute ensures only logged-in users can access the Profile page */}
               <Route
                 path="/profile"
                 element={
                   <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Profile
+                      // handleCardClick is the orginal source because it is App.jsx
+                      // Passes through Profile → ClothesSection → ItemCard
                       handleCardClick={handleCardClick}
                       // Use the onAddClick prop to open the modal
                       onAddClick={handleAddClick}
@@ -344,13 +344,17 @@ function App() {
             activeModal={activeModal}
             onAddItemModalSubmit={handleAddItemModalSubmit}
           />
-
           <ItemModal
             isOpen={activeModal === "preview"}
             activeModal={activeModal}
             card={selectedCard}
             onClose={closeActiveModal}
             onDeleteItem={handleDeleteItem}
+          />
+          {/* RegisterModal needs to open the sign up modal  */}
+          <RegisterModal
+            isOpen={activeModal === "signup"}
+            onClose={closeActiveModal}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>
