@@ -1,0 +1,82 @@
+.modal__content {
+  background-color: #fff;
+  position: relative;
+  padding: 28px 28px 36px;
+  max-width: 496px;
+  box-sizing: border-box;
+  width: 100%;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal__content_type_image {
+  padding: 0 !important;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.modal__image {
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal__label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.modal__label_account_info {
+  border: none;
+  border-bottom: 1px solid #cfcfcf;
+  margin-top: 8px;
+}
+
+.modal__weather {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 0 32px 32px;
+}
+
+.modal__footer {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+}
+
+.modal__delete_item {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  bottom: 36px;
+  color: rgba(255, 77, 0, 1);
+  margin: 0 32px 0 auto;
+  border: transparent;
+  background: transparent;
+}
+
+.modal__submit {
+  padding: 8px 16px;
+  margin: 0;
+}
+
+.modal__submit:not(:disabled) {
+  margin: 0;
+}
+
+.modal__redirect_login {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 16px;
+  border: none;
+  background: transparent;
+  margin-left: 2px;
+  padding: 12px;
+  color: #00000080;
+}

@@ -1,134 +1,19 @@
-.signin-modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.25);
-  z-index: 60;
-}
-
-.signin-modal__content {
-  background: #fff;
-  padding: 22px 24px;
-  border-radius: 12px;
-  width: 420px;
-  max-width: calc(100% - 40px);
-  position: relative;
-  box-shadow: 0 12px 30px rgba(22, 28, 37, 0.12);
-}
-
-.close_signin {
-  position: absolute;
-  margin: -8px 0px 0px -24px;
-}
-
-.signin-modal__close {
-  position: absolute;
-  right: 12px;
-  background: transparent;
+.modal__label_account_info {
   border: none;
-}
-
-.signin-modal__content h3 {
-  margin: 6px 0 0;
-  padding-bottom: 24px;
-  font-size: 15px;
-  font-weight: 700;
-  color: #111;
-}
-
-.signin-form label {
-  font-family: "cabinet grotesk", sans-serif;
-  font-weight: 700;
-  display: block;
-  font-size: 12px;
-  color: #444;
-  margin-bottom: 8px;
-}
-
-.signin__title {
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-}
-
-.signin-form input {
-  width: 100%;
-  padding: 8px 4px 10px;
-  border: none;
-  border-bottom: 1px solid #d1d5db;
-  outline: none;
-  font-size: 14px;
-  color: #222;
-}
-
-.signin-form input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px white inset; /* or your background color */
-  -webkit-text-fill-color: #000; /* keep text visible */
-  transition: background-color 5000s ease-in-out 0s; /* prevents flashing */
-}
-
-.signin-form input::placeholder {
-  color: #9aa0a6;
-}
-
-.signin-form input:focus {
-  border-bottom-color: #6b7280;
-}
-
-.signin-form__error {
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-weight: 700;
-  color: #b91c1c;
-  margin: 12px 0;
-  font-size: 14px;
-}
-
-.signin-form__actions {
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  border-bottom: 1px solid #cfcfcf;
   margin-top: 8px;
 }
 
-.signin-form__actions button {
-  padding: 8px 14px;
-  border-radius: 6px;
+.modal__submit:disabled {
+  margin: 0;
+}
+
+.modal__redirect_signup {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 16px;
   border: none;
-  cursor: pointer;
-}
-
-.signin-form__actions button[type="submit"] {
-  background: #bfbfbf;
-  color: #fff;
-}
-
-.signin-form__actions button[type="submit"]:disabled {
-  background: #6b7280;
-  cursor: not-allowed;
-}
-
-.signin-form__actions button[type="submit"]:not(:disabled) {
-  background: #000;
-  cursor: pointer;
-}
-
-.signin-form__actions button:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-
-.signin-form__signup-note {
-  color: #8b8f94;
-  font-size: 13px;
-}
-
-.signin-form__signup-link {
   background: transparent;
-  border: none;
-  color: #444;
-  cursor: pointer;
+  margin-left: 2px;
+  padding: 12px;
+  color: #00000080;
 }

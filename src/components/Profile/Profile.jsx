@@ -3,17 +3,20 @@ import "./Profile.css";
 
 // Importing JSX (React) components
 import { useState, useContext } from "react";
-import EditProfileData from "../EditProfileData/EditProfileData"; // ensure this file exists
+import EditProfileData from "../EditProfileData/EditProfileData";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 
 function Profile({
+  activeModal,
   handleCardClick,
+  handleProfileData, // comes from App.jsx
   clothingItems,
   onAddClick,
   setIsLoggedIn,
   handleUpdateUser,
+  handleLogout,
 }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const currentUser = useContext(CurrentUserContext);
@@ -21,8 +24,11 @@ function Profile({
     <div className="profile">
       <section className="profile__sidebar">
         <SideBar
+          activeModal={activeModal}
+          handleProfileData={handleProfileData}
           setIsLoggedIn={setIsLoggedIn}
           onEditProfile={() => setIsEditOpen(true)}
+          handleLogout={handleLogout} // Passes handleLogout to Sidebar.jsx
         />
       </section>
       {isEditOpen && (

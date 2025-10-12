@@ -1,10 +1,12 @@
-import { useState } from "react";
 import "./SigninModal.css";
-import closeButton from "../../assets/x_modal_button.svg";
-import { signin } from "../../utils/auth";
+
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
+import closeButton from "../../assets/x_modal_button.svg";
+import { signin } from "../../utils/auth";
+
+function SigninModal({ activeModal, onClose, onLogin, setActiveModal }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,7 +15,9 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
   // keep local references for convenience in JSX
   const { email, password } = formData;
 
-  if (!isOpen) return null;
+  // SigninModal opens and shows the email password.
+  // Reminder: activeModal is an empty string. Look in App.jsx line 82.
+  if (activeModal !== "signin") return null;
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -58,20 +62,17 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
   }
 
   return (
-    <div className="signin-modal">
-      <div className="signin-modal__content">
-        <button className="signin-modal__close" onClick={onClose}>
-          <img
-            src={closeButton}
-            className="close_signin"
-            alt="Close__Signup_Button"
-          />
+    <div className={`modal ${activeModal === "signin" ? "modal_opened" : ""} `}>
+      <div className="modal__content">
+        <button className="modal__close" onClick={onClose}>
+          <img src={closeButton} className="" alt="Close__Signup_Button" />
         </button>
-        <h3 className="signin__title">Log In</h3>
-        <form className="signin-form" onSubmit={handleSubmit}>
-          <label>
+        <h3 className="modal__title">Log In</h3>
+        <form className="modal__form" onSubmit={handleSubmit}>
+          <label className="modal__label">
             Email
             <input
+              className="modal__label_account_info modal__input_text"
               name="email"
               type="email"
               placeholder="Email"
@@ -79,9 +80,10 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
               onChange={handleChange}
             />
           </label>
-          <label>
+          <label className="modal__label">
             Password
             <input
+              className="modal__label_account_info modal__input_text"
               name="password"
               type="password"
               placeholder="Password"
@@ -89,22 +91,21 @@ function SigninModal({ isOpen, onClose, onLogin, onSwitchToSignup }) {
               onChange={handleChange}
             />
           </label>
-          {error && <div className="signin-form__error">{error}</div>}
-          <div className="signin-form__actions">
+          {error && <div className="">{error}</div>}
+          <div>
             <button
+              className="modal__submit"
               type="submit"
               disabled={isSubmitting || !email || !password}
-              className="signin-form__submit"
             >
               {isSubmitting ? "Signing in..." : "Log In"}
             </button>
             <button
               type="button"
-              className="signin-form__signup-link"
+              className="modal__redirect_signup"
               onClick={() => {
-                // clear any local error, then ask parent to switch to signup modal
-                setError("");
-                if (typeof onSwitchToSignup === "function") onSwitchToSignup();
+                setActiveModal("signup"); // Switch to RegisterModal
+                setError(""); // Clear any error in SigninModal
               }}
             >
               or Sign Up

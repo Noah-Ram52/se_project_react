@@ -1,4 +1,6 @@
 .card {
+  display: flex;
+  align-items: stretch;
   position: relative; /* allows absolute positioning inside */
   background-color: #f0f0f0;
   border-radius: 10px;

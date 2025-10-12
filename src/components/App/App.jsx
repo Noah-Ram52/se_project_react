@@ -25,6 +25,8 @@ import AddItemModal from "../AddItemModal/AddItemModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { defaultClothingItems } from "../../utils/constants";
 import RegisterModal from "../RegistrationModal/RegisterModal";
+import SigninModal from "../SigninModal/SigninModal";
+import EditProfileData from "../EditProfileData/EditProfileData";
 
 function App() {
   // React Router code to hide the header on the login page
@@ -43,11 +45,6 @@ function App() {
     condition: "",
     isDay: false,
   });
-
-  // Guidelines for using useState:
-  // 1. It's useful to make the defualt value the same for later on
-  // Example: Setting it to an empty string means
-  // You can change it other types of strings
 
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
   // The default 'useState' for activeModal and setActiveModal is "".
@@ -80,8 +77,22 @@ function App() {
     setActiveModal("");
   };
 
+  // For the RegistrationModal:
+  // For the handleSignup function we set the empty text setActiveModal to
+  // "signup". The same is said for activeModal.
   const handleSignUp = () => {
     setActiveModal("signup");
+  };
+
+  // For the RegistrationModal:
+  // For the handleSignin function we set the empty text setActiveModal
+  // to "signin". The same is said for activeModal.
+  const handleSignIn = () => {
+    setActiveModal("signin");
+  };
+
+  const handleProfileData = () => {
+    setActiveModal("edit_profile");
   };
 
   // UseEffect to check for a valid JWT token in localStorage on app mount
@@ -297,6 +308,12 @@ function App() {
               handleAddClick={handleAddClick}
               handleCardClick={handleCardClick}
               weatherData={weatherData}
+              // Header will recieve activeModal & setActiveModal
+              // And can control modals through the same state as the rest of the app
+              activeModal={activeModal}
+              setActiveModal={setActiveModal}
+              handleSignUp={handleSignUp}
+              handleSignIn={handleSignIn}
             />
 
             <Routes>
@@ -322,20 +339,22 @@ function App() {
                   <ProtectedRoute isLoggedIn={isLoggedIn}>
                     <Profile
                       // handleCardClick is the orginal source because it is App.jsx
-                      // Passes through Profile → ClothesSection → ItemCard
+                      // Passes through Profile-->
+                      activeModal={activeModal}
                       handleCardClick={handleCardClick}
+                      handleProfileData={handleProfileData}
                       // Use the onAddClick prop to open the modal
                       onAddClick={handleAddClick}
                       setIsLoggedIn={setIsLoggedIn}
                       clothingItems={clothingItems}
                       handleUpdateUser={handleUpdateUser}
                       setCurrentUser={setCurrentUser}
+                      handleLogout={handleLogout} // Passes handleLogout to Profile.jsx
                     />
                   </ProtectedRoute>
                 }
               />
             </Routes>
-
             <Footer />
           </div>
           <AddItemModal
@@ -353,8 +372,24 @@ function App() {
           />
           {/* RegisterModal needs to open the sign up modal  */}
           <RegisterModal
-            isOpen={activeModal === "signup"}
+            activeModal={activeModal}
+            onClose={closeActiveModal} // closes modal
+            setIsLoggedIn={setIsLoggedIn}
+            onAuthLogin={handleAuthLogin}
+            setActiveModal={setActiveModal}
+          />
+          <SigninModal
+            activeModal={activeModal}
             onClose={closeActiveModal}
+            setIsLoggedIn={setIsLoggedIn}
+            onLogin={handleAuthLogin}
+            setActiveModal={setActiveModal}
+          />
+          <EditProfileData
+            activeModal={activeModal}
+            currentUser={currentUser}
+            onClose={closeActiveModal}
+            onUpdateUser={handleUpdateUser}
           />
         </div>
       </CurrentTemperatureUnitContext.Provider>

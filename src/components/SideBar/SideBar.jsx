@@ -4,21 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function SideBar({ setIsLoggedIn, onEditProfile }) {
+function SideBar({ onEditProfile, handleLogout, handleProfileData }) {
   const navigate = useNavigate();
   const currentUser = useContext(CurrentUserContext);
-
-  // Handles user logging out
-
-  function handleLogout() {
-    try {
-      localStorage.removeItem("jwt");
-    } catch (e) {
-      void e;
-    }
-    if (typeof setIsLoggedIn === "function") setIsLoggedIn(false);
-    navigate("/");
-  }
 
   const displayName = currentUser?.name || "Terrence Tegegne";
   const avatarSrc = currentUser?.avatar || null;
@@ -26,7 +14,6 @@ function SideBar({ setIsLoggedIn, onEditProfile }) {
   return (
     <aside className="sidebar">
       <div className="sidebar__profile">
-        <img className="sidebar__avatar" src={avatarWTWR} alt="User Avatar" />
         {avatarSrc ? (
           <img className="sidebar__avatar" src={avatarSrc} alt={displayName} />
         ) : (
@@ -43,10 +30,7 @@ function SideBar({ setIsLoggedIn, onEditProfile }) {
             <button
               type="button"
               className="sidebar__link_profile"
-              onClick={() => {
-                console.debug("SideBar: Change profile data clicked");
-                if (typeof onEditProfile === "function") onEditProfile();
-              }}
+              onClick={handleProfileData}
             >
               Change profile data
             </button>

@@ -8,11 +8,11 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import RegisterModal from "../RegistrationModal/RegisterModal";
 
-function Header({ handleAddClick, weatherData }) {
+function Header({ handleAddClick, weatherData, handleSignUp, handleSignIn }) {
   const currentUser = useContext(CurrentUserContext);
   const displayName = currentUser?.name || "Terrence Tegegne";
   const avatarSrc = currentUser?.avatar || null;
-  console.log("Current User in Header:", currentUser);
+  // console.log("Current User in Header:", currentUser);
 
   // Get current date in "Month Day" format,
   const currentDate = new Date().toLocaleString("default", {
@@ -68,25 +68,20 @@ function Header({ handleAddClick, weatherData }) {
               <Link to="/profile" className="header__link">
                 <div className="header__user-container">
                   <p className="header__username">{displayName}</p>
-                  <img
-                    src={avatar}
-                    alt="Terrence Tegegne"
-                    className="header__avatar"
-                  />
-
                   {avatarSrc ? (
+                    // Uses uploaded image if available
                     <img
                       src={avatarSrc}
                       alt={displayName}
                       className="header__avatar"
                     />
                   ) : (
-                    // <div className="header__avatar header__avatar--initials">
-                    //   {(displayName[0] || "T").toUpperCase()}
-                    // </div>
-                    <div className="">
-                      {/* {(displayName[0] || "T").toUpperCase()} */}
-                    </div>
+                    // Otherwise fall back to default image or initials
+                    <img
+                      src={avatar}
+                      alt={displayName}
+                      className="header__avatar"
+                    />
                   )}
                 </div>
               </Link>
@@ -95,10 +90,15 @@ function Header({ handleAddClick, weatherData }) {
             // Start building sign up and sign in
             <>
               <div className="wtwr__accounts">
-                <button className="wtwr__accounts_signup wtwr__accounts">
+                <button
+                  className="wtwr__accounts_signup wtwr__accounts"
+                  onClick={handleSignUp}
+                >
                   Sign Up
                 </button>{" "}
-                <button className=" wtwr__accounts">Sign In</button>
+                <button className="wtwr__accounts" onClick={handleSignIn}>
+                  Sign In
+                </button>
               </div>
             </>
           )}
