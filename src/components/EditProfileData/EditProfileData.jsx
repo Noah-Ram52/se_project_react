@@ -76,7 +76,11 @@ function EditProfileData({ activeModal, onClose, onUpdateUser, currentUser }) {
           </label>
           {error && <div className="modal__error">{error}</div>}
           <div>
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              className="modal__submit modal__submit-edit_modal"
+              type="submit"
+              disabled={isSubmitting}
+            >
               {isSubmitting ? "Saving..." : "Save changes"}
             </button>
           </div>

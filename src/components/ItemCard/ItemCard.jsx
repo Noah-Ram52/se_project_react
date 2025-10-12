@@ -1,10 +1,10 @@
-import { useState } from "react";
 import "./ItemCard.css";
 import unlikeIcon from "../../assets/unliked_button.svg";
 import likedIcon from "../../assets/liked_button.svg";
+import useLocalStorage from "../../utils/useLocalStorage";
 
 function ItemCard({ item, onCardClick }) {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useLocalStorage(`liked-${item._id}`, false);
 
   // In ItemCard we are displaying the item, but redirect to
   // App.jsx line to see what happens when interacted

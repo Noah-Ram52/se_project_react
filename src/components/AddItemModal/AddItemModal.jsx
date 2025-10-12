@@ -69,7 +69,7 @@ export default function AddItemModal({
           required
         />
       </label>
-      <label htmlFor="imageUrl" className="modal__label">
+      <label htmlFor="imageUrl" className="modal__label ">
         Image{" "}
         <input
           type="text"
@@ -83,7 +83,10 @@ export default function AddItemModal({
       </label>
       <fieldset className="modal__radio-buttons">
         <legend className="modal__legend">Select the weather type:</legend>
-        <label htmlFor="hot" className="modal__label modal__label_type_radio">
+        <label
+          htmlFor="hot"
+          className="modal__label modal__label_type_radio modal__label_clothes"
+        >
           <input
             id="hot"
             type="radio"
@@ -95,7 +98,10 @@ export default function AddItemModal({
           />
           Hot
         </label>
-        <label htmlFor="warm" className="modal__label modal__label_type_radio">
+        <label
+          htmlFor="warm"
+          className="modal__label modal__label_type_radio modal__label_clothes"
+        >
           <input
             id="warm"
             type="radio"
@@ -107,7 +113,10 @@ export default function AddItemModal({
           />
           Warm
         </label>
-        <label htmlFor="cold" className="modal__label modal__label_type_radio">
+        <label
+          htmlFor="cold"
+          className="modal__label modal__label_type_radio modal__label_clothes"
+        >
           <input
             id="cold"
             type="radio"
