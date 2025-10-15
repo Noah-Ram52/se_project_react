@@ -35,6 +35,8 @@
   border: 1px solid #c0c0c0;
   display: block;
   margin: 0 auto; /* centers it horizontally */
+  height: 325px;
+  width: 328px;
 }
 
 /* Title text badge */

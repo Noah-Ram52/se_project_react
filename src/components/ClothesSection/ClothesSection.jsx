@@ -5,7 +5,13 @@ import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
 
 // Pass clothingItems as a prop to ClothesSection
-function ClothesSection({ handleCardClick, onAddClick, clothingItems = [] }) {
+function ClothesSection({
+  handleCardClick,
+  onAddClick,
+  clothingItems = [],
+  handleCardLike,
+  currentUser,
+}) {
   return (
     <div className="clothes-section">
       <div>
@@ -29,6 +35,8 @@ function ClothesSection({ handleCardClick, onAddClick, clothingItems = [] }) {
                 item={item}
                 // Passes a prop from parent (Profile) to each ItemCard
                 onCardClick={handleCardClick}
+                handleCardLike={handleCardLike}
+                isLiked={item.isLiked}
               />
             );
           })}

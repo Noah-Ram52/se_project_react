@@ -1,10 +1,10 @@
 import "./ItemCard.css";
+
 import unlikeIcon from "../../assets/unliked_button.svg";
 import likedIcon from "../../assets/liked_button.svg";
-import useLocalStorage from "../../utils/useLocalStorage";
 
-function ItemCard({ item, onCardClick }) {
-  const [isLiked, setIsLiked] = useLocalStorage(`liked-${item._id}`, false);
+function ItemCard({ item, onCardClick, handleCardLike, isLiked }) {
+  // const [isLiked, setIsLiked] = useState(false);
 
   // In ItemCard we are displaying the item, but redirect to
   // App.jsx line to see what happens when interacted
@@ -14,7 +14,8 @@ function ItemCard({ item, onCardClick }) {
 
   const handleLikeClick = (e) => {
     e.stopPropagation(); // prevent triggering card click
-    setIsLiked((prev) => !prev);
+    // setIsLiked((prev) => !prev);
+    handleCardLike({ id: item._id, isLiked });
   };
 
   return (

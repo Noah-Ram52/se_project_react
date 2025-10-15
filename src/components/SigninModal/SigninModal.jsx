@@ -2,8 +2,7 @@ import "./SigninModal.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import closeButton from "../../assets/x_modal_button.svg";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { signin } from "../../utils/auth";
 
 function SigninModal({ activeModal, onClose, onLogin, setActiveModal }) {
@@ -61,59 +60,63 @@ function SigninModal({ activeModal, onClose, onLogin, setActiveModal }) {
       });
   }
 
+  const isSubmitDisabled =
+    !formData.email.trim() || !formData.password || isSubmitting;
+
+  // Note: Important to get rid of <div></div> tags.
+  // 1. Avoids duplication because ModalWithForm renders all the outer modal elments.
+  // 2. Ensure Consistancy of the passing form fied and content as children, from all modals.
+  // 3. Reduce amount of bugs that may be created.
+
   return (
-    <div className={`modal ${activeModal === "signin" ? "modal_opened" : ""} `}>
-      <div className="modal__content">
-        <button className="modal__close" onClick={onClose}>
-          <img src={closeButton} className="" alt="Close__Signup_Button" />
-        </button>
-        <h3 className="modal__title">Log In</h3>
-        <form className="modal__form" onSubmit={handleSubmit}>
-          <label className="modal__label">
-            Email
-            <input
-              className="modal__label_account_info modal__input_text"
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="modal__label">
-            Password
-            <input
-              className="modal__label_account_info modal__input_text"
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </label>
-          {error && <div className="">{error}</div>}
-          <div>
-            <button
-              className="modal__submit"
-              type="submit"
-              disabled={isSubmitting || !email || !password}
-            >
-              {isSubmitting ? "Signing in..." : "Log In"}
-            </button>
-            <button
-              type="button"
-              className="modal__redirect_signup"
-              onClick={() => {
-                setActiveModal("signup"); // Switch to RegisterModal
-                setError(""); // Clear any error in SigninModal
-              }}
-            >
-              or Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <ModalWithForm
+      title="Log In"
+      buttonText={isSubmitting ? "Signing in..." : "Log In"}
+      onClose={() => {
+        onClose();
+        setError("");
+      }}
+      isOpen={activeModal === "signin"}
+      onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitDisabled}
+    >
+      <label className="modal__label">
+        Email
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label className="modal__label">
+        Password
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      {error && <div className="modal__error">{error}</div>}
+      <button
+        type="button"
+        className="modal__redirect_signup"
+        disabled={isSubmitting}
+        onClick={() => {
+          setActiveModal("signup");
+          setError("");
+        }}
+      >
+        or Sign Up
+      </button>
+    </ModalWithForm>
   );
 }
 

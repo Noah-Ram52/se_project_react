@@ -1,7 +1,8 @@
 import "./RegisterModal.css";
 
 import { useState, useEffect } from "react";
-import closeButton from "../../assets/x_modal_button.svg";
+
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { signup, signin, saveToken } from "../../utils/auth";
 
 // 🔹 Getting `activeModal` and `setActiveModal` from App.jsx
@@ -24,10 +25,21 @@ function RegisterModal({
 
   // TODO - Create animation for open/closing modal
 
-  // 🔹 Modal visibility now depends on activeModal from App.jsx
-  //  Reminder the default value of activeModal is ""
-  //  Therefore, since we have "signup" the strict inequality will return true.
-  //  This will make the modal open.
+  // Rests the form when modal opens
+
+  useEffect(() => {
+    if (activeModal === "signup") {
+      setFormData({
+        email: "",
+        password: "",
+        name: "",
+        avatarUrl: "",
+      });
+      setErrors("");
+    }
+  }, [activeModal]);
+
+  // Hide modal if it's not active
   if (activeModal !== "signup") return null;
 
   // Handle input changes
@@ -47,7 +59,7 @@ function RegisterModal({
       return;
     }
 
-    // normalize avatar URL
+    // Normalize avatar URL
     // If there is any extra spacing it removes that
     // Example: If user enters, " https://example.com/avatar.jpg "
     // After using trim it becomes, "https://example.com/avatar.jpg"
@@ -98,92 +110,92 @@ function RegisterModal({
     }
   }
 
+  // Disables button if fields are empty or submitting
+  const isSubmitDisabled =
+    !formData.email.trim() ||
+    !formData.password ||
+    !formData.name.trim() ||
+    !formData.avatarUrl.trim() ||
+    isSubmitting;
+
   return (
-    // Added `modal` and `modal_opened` for animation control
-    <div className={`modal ${activeModal === "signup" ? "modal_opened" : ""} `}>
-      <div className="modal__content">
-        <div className="">
-          <button
-            className="modal__close"
-            onClick={() => {
-              onClose();
-              setErrors("");
-            }}
-          >
-            <img src={closeButton} className="" alt="Close Signup Button" />
-          </button>
-          <h2 className="modal__title">Sign Up</h2>
-          <form className="modal__form" onSubmit={handleSubmit}>
-            <label className="modal__label">
-              Email*
-              <input
-                className="modal__label_account_info modal__input_text"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-              />
-            </label>
+    <ModalWithForm
+      title="Sign Up"
+      buttonText={isSubmitting ? "Signing up..." : "Sign Up"}
+      onClose={() => {
+        onClose();
+        setErrors("");
+      }}
+      isOpen={activeModal === "signup"}
+      onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitDisabled}
+    >
+      <label className="modal__label">
+        Email*
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+          required
+        />
+      </label>
 
-            <label className="modal__label">
-              Password*
-              <input
-                className="modal__label_account_info modal__input_text"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password"
-              />
-            </label>
+      <label className="modal__label">
+        Password*
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+          required
+        />
+      </label>
 
-            <label className="modal__label">
-              Name*
-              <input
-                className="modal__label_account_info modal__input_text"
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Name"
-              />
-            </label>
+      <label className="modal__label">
+        Name*
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="name"
+          type="text"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Name"
+          required
+        />
+      </label>
 
-            <label className="modal__label">
-              Avatar URL*
-              <input
-                className="modal__label_account_info modal__input_text"
-                name="avatarUrl"
-                type="url"
-                value={formData.avatarUrl}
-                onChange={handleChange}
-                placeholder="Avatar URL"
-              />
-            </label>
+      <label className="modal__label">
+        Avatar URL*
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="avatarUrl"
+          type="url"
+          value={formData.avatarUrl}
+          onChange={handleChange}
+          placeholder="Avatar URL"
+          required
+        />
+      </label>
 
-            {/* 🔹 Show validation or API errors */}
-            {errors && <div>{errors}</div>}
+      {errors && <div className="modal__error">{errors}</div>}
 
-            <div className="modal__error">
-              <button type="submit" className="modal__submit">
-                {isSubmitting ? "Signing up..." : "Sign Up"}
-              </button>
-              <button
-                type="button"
-                className="modal__redirect_login"
-                onClick={() => {
-                  setActiveModal("signin");
-                  setErrors("");
-                }}
-              >
-                or Log In
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+      <button
+        type="button"
+        className="modal__redirect_login"
+        disabled={isSubmitting}
+        onClick={() => {
+          setActiveModal("signin");
+          setErrors("");
+        }}
+      >
+        or Log In
+      </button>
+    </ModalWithForm>
   );
 }
 

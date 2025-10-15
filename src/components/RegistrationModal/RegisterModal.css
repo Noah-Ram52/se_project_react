@@ -77,6 +77,9 @@
   border: none;
   background: transparent;
   margin-left: 2px;
-  padding: 12px;
   color: #00000080;
+  position: relative;
+  top: 27px;
+  left: 110px;
+  max-width: 124px;
 }

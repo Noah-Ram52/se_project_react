@@ -1,7 +1,7 @@
 import "./EditProfileData.css";
 
 import { useState, useEffect } from "react";
-import closeButton from "../../assets/x_modal_button.svg";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function EditProfileData({ activeModal, onClose, onUpdateUser, currentUser }) {
   const [form, setForm] = useState({ name: "", avatar: "" });
@@ -42,51 +42,43 @@ function EditProfileData({ activeModal, onClose, onUpdateUser, currentUser }) {
     }
   }
 
-  if (!isOpen) return null;
+  // if (!isOpen) return null;
+
+  // Here use form variable. This matches consistancy file of this code.
+  const isSubmitDisabled = !form.name.trim() || !form.avatar || isSubmitting;
 
   return (
-    <div
-      className={`modal ${
-        activeModal === "edit_profile" ? "modal_opened" : ""
-      } `}
+    <ModalWithForm
+      title="Change profile data"
+      buttonText={isSubmitting ? "Saving Changes..." : "Save Changes"}
+      onClose={() => {
+        onClose();
+        setError(""); // (fix typo, keep variable singular "error")
+      }}
+      isOpen={activeModal === "edit_profile"}
+      onSubmit={handleSubmit}
+      isSubmitDisabled={isSubmitDisabled}
     >
-      <div className="modal__content">
-        <button className="modal__close" onClick={onClose}>
-          <img src={closeButton} alt="Close_Profile_Data" className="" />
-        </button>
-        <h3 className="modal__title">Change profile data</h3>
-        <form className="modal__form" onSubmit={handleSubmit}>
-          <label className="modal__label">
-            Name *
-            <input
-              className="modal__label_account_info modal__input_text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="modal__label">
-            Avatar *
-            <input
-              className="modal__label_account_info modal__input_text"
-              name="avatar"
-              value={form.avatar}
-              onChange={handleChange}
-            />
-          </label>
-          {error && <div className="modal__error">{error}</div>}
-          <div>
-            <button
-              className="modal__submit modal__submit-edit_modal"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Saving..." : "Save changes"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <label className="modal__label">
+        Name *
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+        />
+      </label>
+      <label className="modal__label">
+        Avatar *
+        <input
+          className="modal__label_account_info modal__input_text"
+          name="avatar"
+          value={form.avatar}
+          onChange={handleChange}
+        />
+      </label>
+      {error && <div className="modal__error">{error}</div>}
+    </ModalWithForm>
   );
 }
 

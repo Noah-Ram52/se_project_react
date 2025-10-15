@@ -189,6 +189,7 @@ function App() {
           items.map((item) => ({
             ...item,
             link: item.imageUrl || item.link || item.image || "",
+            isLiked: item.likes.includes(currentUser?._id),
           }))
         );
       })
@@ -267,7 +268,7 @@ function App() {
   }
 
   // Like & Dislike feature for clothing items
-
+  // The handleCardLike() function is not used. You should use it for liking in the project
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
     // Check if this card is not currently liked
@@ -329,6 +330,7 @@ function App() {
                     // Then go to Profile.jsx and pass it to ClothesSection tag
                     clothingItems={clothingItems}
                     onAuthLogin={handleAuthLogin}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
