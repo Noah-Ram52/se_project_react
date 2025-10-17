@@ -14,6 +14,7 @@ import * as auth from "../../utils/auth";
 
 import "./App.css";
 import { APIkey, coordinates } from "../../utils/constants";
+import { defaultClothingItems } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -23,7 +24,6 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import { defaultClothingItems } from "../../utils/constants";
 import RegisterModal from "../RegistrationModal/RegisterModal";
 import SigninModal from "../SigninModal/SigninModal";
 import EditProfileData from "../EditProfileData/EditProfileData";
@@ -268,31 +268,38 @@ function App() {
   }
 
   // Like & Dislike feature for clothing items
-  // The handleCardLike() function is not used. You should use it for liking in the project
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
-    // Check if this card is not currently liked
-    !isLiked
-      ? // if so, send a request to add the user's id to the card's likes array
-        api
-          // the first argument is the card's id
-          .addCardLike(id, token)
-          .then((updatedCard) => {
-            setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
-            );
+    const apiMethod = !isLiked ? api.addCardLike : api.removeCardLike;
+
+    apiMethod(id, token)
+      .then((updatedCard) => {
+        console.log("API response:", updatedCard);
+        setClothingItems((cards) =>
+          cards.map((item) => {
+            if (item._id === id) {
+              // Use backend likes array if present, otherwise fall back to the previous local likes
+              const likesArray = Array.isArray(updatedCard.likes)
+                ? updatedCard.likes
+                : item.likes || [];
+              return {
+                ...item, // Preserve all existing properties (including the image)
+                ...updatedCard, // Overwrite with latest API data
+                link:
+                  item.link ||
+                  updatedCard.imageUrl ||
+                  updatedCard.link ||
+                  updatedCard.image ||
+                  "",
+                isLiked: likesArray.includes(currentUser?._id),
+                likes: likesArray, // Ensure likes property always exists
+              };
+            }
+            return item;
           })
-          .catch((err) => console.log(err))
-      : // if not, send a request to remove the user's id from the card's likes array
-        api
-          // the first argument is the card's id
-          .removeCardLike(id, token)
-          .then((updatedCard) => {
-            setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
-            );
-          })
-          .catch(console.error);
+        );
+      })
+      .catch((err) => console.log(err));
   };
 
   const location = useLocation();
