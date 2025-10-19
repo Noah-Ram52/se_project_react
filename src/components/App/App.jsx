@@ -279,9 +279,13 @@ function App() {
           cards.map((item) => {
             if (item._id === id) {
               // Use backend likes array if present, otherwise fall back to the previous local likes
+              // Use updatedCard.likes if available, otherwise
+              // manually update likes array based on isLiked
               const likesArray = Array.isArray(updatedCard.likes)
                 ? updatedCard.likes
-                : item.likes || [];
+                : isLiked
+                ? item.likes.filter((uid) => uid !== currentUser?._id) // remove currentUser from likes
+                : [...(item.likes || []), currentUser?._id]; // add currentUser to likes
               return {
                 ...item, // Preserve all existing properties (including the image)
                 ...updatedCard, // Overwrite with latest API data
@@ -337,7 +341,8 @@ function App() {
                     // Then go to Profile.jsx and pass it to ClothesSection tag
                     clothingItems={clothingItems}
                     onAuthLogin={handleAuthLogin}
-                    onCardLike={handleCardLike}
+                    // onCardLike={handleCardLike}
+                    handleCardLike={handleCardLike}
                   />
                 }
               />
@@ -359,6 +364,8 @@ function App() {
                       handleUpdateUser={handleUpdateUser}
                       setCurrentUser={setCurrentUser}
                       handleLogout={handleLogout} // Passes handleLogout to Profile.jsx
+                      // onCardLike={handleCardLike}
+                      handleCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }

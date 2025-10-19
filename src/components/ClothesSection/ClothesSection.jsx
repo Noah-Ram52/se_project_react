@@ -36,7 +36,7 @@ function ClothesSection({
                 item={item}
                 // Passes a prop from parent (Profile) to each ItemCard
                 onCardClick={handleCardClick}
-                // handleCardLike={handleCardLike}
+                handleCardLike={handleCardLike}
                 onCardLike={onCardLike}
                 isLiked={item.isLiked}
               />

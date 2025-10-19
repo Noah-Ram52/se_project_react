@@ -60,8 +60,8 @@ function Profile({
           handleCardClick={handleCardClick}
           clothingItems={clothingItems}
           onAddClick={onAddClick}
-          // handleCardLike={handleCardLike}
-          onCardLike={handleCardLike}
+          handleCardLike={handleCardLike}
+          // onCardLike={handleCardLike}
         />
       </section>
     </div>

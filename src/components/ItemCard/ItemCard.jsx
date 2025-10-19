@@ -2,7 +2,7 @@ import "./ItemCard.css";
 import unlikeIcon from "../../assets/unliked_button.svg";
 import likedIcon from "../../assets/liked_button.svg";
 
-function ItemCard({ item, onCardClick, onCardLike, isLiked }) {
+function ItemCard({ item, onCardClick, onCardLike, isLiked, handleCardLike }) {
   // const [isLiked, setIsLiked] = useState(false);
 
   // In ItemCard we are displaying the item, but redirect to
@@ -14,7 +14,7 @@ function ItemCard({ item, onCardClick, onCardLike, isLiked }) {
   const handleLikeClick = (e) => {
     e.stopPropagation(); // Prevent triggering card click
     // setIsLiked((prev) => !prev);
-    onCardLike({ id: item._id, isLiked }); // Use onCardLike here
+    handleCardLike({ id: item._id, isLiked }); // Use onCardLike here
   };
 
   return (
