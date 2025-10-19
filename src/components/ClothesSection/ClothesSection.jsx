@@ -11,6 +11,7 @@ function ClothesSection({
   clothingItems = [],
   handleCardLike,
   onCardLike,
+  isLoggedIn,
   currentUser,
 }) {
   return (
@@ -39,6 +40,7 @@ function ClothesSection({
                 handleCardLike={handleCardLike}
                 onCardLike={onCardLike}
                 isLiked={item.isLiked}
+                isLoggedIn={isLoggedIn}
               />
             );
           })}

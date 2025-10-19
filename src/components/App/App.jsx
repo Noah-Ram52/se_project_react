@@ -54,6 +54,11 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
+  // State variable and function to manage user login status
+  // eslint-disable-next-line no-console
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   // Function to toggle the temperature unit between Fahrenheit and Celsius
 
   const handleToggleSwitchChange = () => {
@@ -220,11 +225,6 @@ function App() {
 
   const navigate = useNavigate();
 
-  // State variable and function to manage user login status
-  // eslint-disable-next-line no-console
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
-
   // on app start check stored token
   useEffect(() => {
     const token = auth.getToken();
@@ -306,8 +306,6 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const location = useLocation();
-
   return (
     // Value to toggle between Fahrenheit and Celsius
     <CurrentUserContext.Provider value={currentUser}>
@@ -337,6 +335,7 @@ function App() {
                     setIsLoggedIn={setIsLoggedIn}
                     onAddButtonClick={setActiveModal}
                     handleCardClick={handleCardClick}
+                    isLoggedIn={isLoggedIn}
                     // Pass clothingItems as a prop to Main
                     // Then go to Profile.jsx and pass it to ClothesSection tag
                     clothingItems={clothingItems}
@@ -366,6 +365,7 @@ function App() {
                       handleLogout={handleLogout} // Passes handleLogout to Profile.jsx
                       // onCardLike={handleCardLike}
                       handleCardLike={handleCardLike}
+                      isLoggedIn={isLoggedIn}
                     />
                   </ProtectedRoute>
                 }
