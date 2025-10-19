@@ -181,6 +181,26 @@ function App() {
 
   // useEffect() Makes Images disappear
 
+  // useEffect(() => {
+  //   getItems()
+  //     .then((res) => {
+  //       const items = Array.isArray(res.items)
+  //         ? res.items
+  //         : Array.isArray(res?.data)
+  //         ? res.data
+  //         : [];
+
+  //       setClothingItems(
+  //         items.map((item) => ({
+  //           ...item,
+  //           link: item.imageUrl || item.link || item.image || "",
+  //           isLiked: item.likes.includes(currentUser?._id),
+  //         }))
+  //       );
+  //     })
+  //     .catch(console.error);
+  // }, []);
+
   useEffect(() => {
     getItems()
       .then((res) => {
@@ -189,17 +209,34 @@ function App() {
           : Array.isArray(res?.data)
           ? res.data
           : [];
-
         setClothingItems(
           items.map((item) => ({
             ...item,
             link: item.imageUrl || item.link || item.image || "",
-            isLiked: item.likes.includes(currentUser?._id),
+            likes: Array.isArray(item.likes) ? item.likes : [],
           }))
         );
       })
       .catch(console.error);
   }, []);
+
+  // This checks for other items and if it checks if the id of that items is
+  // liked before the user refreshes the page and marks that as liked.
+  // This way it saves the liked item when it is refreshed
+  // With the likes instead if isLiked it will not rest
+  // Back to false when the page is refreshed
+  useEffect(() => {
+    if (!currentUser) return;
+    setClothingItems((prevItems) =>
+      prevItems.map((item) => ({
+        ...item,
+        isLiked: Array.isArray(item.likes)
+          ? item.likes.includes(currentUser._id)
+          : false,
+        likes: Array.isArray(item.likes) ? item.likes : [], // always ensure likes is an array
+      }))
+    );
+  }, [currentUser]);
 
   // Escape key closes the modal. This useEffect listens for the Escape key press
   // and closes the modal if it's open. It also cleans up the event listener when the component unmounts or the modal closes

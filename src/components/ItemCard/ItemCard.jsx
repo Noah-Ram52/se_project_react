@@ -19,6 +19,7 @@ function ItemCard({ item, onCardClick, isLiked, handleCardLike, isLoggedIn }) {
     <li className="card">
       <h2 className="weather__cards-text">
         {item.name}{" "}
+        {/* Only shows liked button when logged in using isLoggedIn */}
         {isLoggedIn && (
           <button
             type="checkbox"
