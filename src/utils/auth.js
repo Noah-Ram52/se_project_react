@@ -1,7 +1,9 @@
 // import checkResponse from api.js to avoid code duplication
 import { checkResponse } from "./api";
 
-const baseUrl = "http://localhost:3001";
+import { baseUrl } from "../utils/constants";
+
+// const baseUrl = "http://localhost:3001";
 
 function isValidAbsoluteUrl(str) {
   try {
@@ -29,7 +31,7 @@ function signup({ name, avatar, email, password }) {
   const normalizedAvatar = normalizeAvatarUrl(avatar);
   if (!normalizedAvatar) {
     return Promise.reject(
-      "Invalid avatar URL. Please provide a full URL (e.g. https://example.com/avatar.jpg)."
+      "Invalid avatar URL. Please provide a full URL (e.g. https://example.com/avatar.jpg).",
     );
   }
 

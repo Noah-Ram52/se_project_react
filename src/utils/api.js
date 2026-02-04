@@ -1,11 +1,13 @@
-const baseUrl = "http://localhost:3001";
+// const baseUrl = "http://localhost:3001";
+
+import { baseUrl } from "../utils/constants";
 
 function checkResponse(res) {
   if (res.ok) return res.json();
   return res
     .json()
     .then((body) =>
-      Promise.reject(body?.message || body || `Error: ${res.status}`)
+      Promise.reject(body?.message || body || `Error: ${res.status}`),
     )
     .catch(() => Promise.reject(`Error: ${res.status}`));
 }
@@ -13,7 +15,7 @@ function checkResponse(res) {
 function authorizedFetch(
   path,
   { method = "GET", body, headers = {} } = {},
-  token
+  token,
 ) {
   const auth =
     token ??
@@ -66,30 +68,8 @@ function updateUser({ name, avatar }, token) {
   return authorizedFetch(
     "/users/me",
     { method: "PATCH", body: { name, avatar } },
-    token
+    token,
   );
-}
-
-//
-
-function addCardLike(id, token) {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  }).then((res) => res.json());
-}
-
-function removeCardLike(id, token) {
-  return fetch(`${baseUrl}/items/${id}/likes`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  }).then((res) => res.json());
 }
 
 export {
@@ -103,6 +83,4 @@ export {
   signIn,
   getUser,
   updateUser,
-  addCardLike,
-  removeCardLike,
 };

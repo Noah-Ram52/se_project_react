@@ -114,3 +114,10 @@ export const coordinates = {
 
 // Weather API key
 export const APIkey = "0c122f2434c6a317ae8c6887fccff822";
+
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.subdom-wtwr.jumpingcrab.com"
+    : "http://localhost:3001";
+
+export { baseUrl };
