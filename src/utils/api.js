@@ -37,6 +37,7 @@ function authorizedFetch(
 
 /* Items */
 function getItems() {
+  console.log(baseUrl);
   return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 function postItems(payload, token) {

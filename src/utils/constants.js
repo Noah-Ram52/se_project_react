@@ -115,8 +115,21 @@ export const coordinates = {
 // Weather API key
 export const APIkey = "0c122f2434c6a317ae8c6887fccff822";
 
+// Vite is picky, so instead of this:
+
+// const baseUrl = process.env.NODE_ENV === "production"
+//  ? "https://api.subdom-wtwr.jumpingcrab.com"
+//     : "http://localhost:3001";
+
+// I changed it to what it is now for const baseUrl.
+
+// That is not equipped for Vite so I created a .env file and typed
+// in the 'VITE_NODE_ENV=production' in the .env file.
+
+// Also had to type the command 'npm run build' then run 'npm run dev'.
+
 const baseUrl =
-  process.env.NODE_ENV === "production"
+  import.meta.env.VITE_NODE_ENV === "production"
     ? "https://api.subdom-wtwr.jumpingcrab.com"
     : "http://localhost:3001";
 

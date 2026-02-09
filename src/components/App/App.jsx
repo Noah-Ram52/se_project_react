@@ -161,7 +161,7 @@ function App() {
     deleteItems(id)
       .then(() => {
         setClothingItems((prevItems) =>
-          prevItems.filter((item) => item._id !== id)
+          prevItems.filter((item) => item._id !== id),
         );
         closeActiveModal();
       })
@@ -207,14 +207,14 @@ function App() {
         const items = Array.isArray(res.items)
           ? res.items
           : Array.isArray(res?.data)
-          ? res.data
-          : [];
+            ? res.data
+            : [];
         setClothingItems(
           items.map((item) => ({
             ...item,
             link: item.imageUrl || item.link || item.image || "",
             likes: Array.isArray(item.likes) ? item.likes : [],
-          }))
+          })),
         );
       })
       .catch(console.error);
@@ -234,7 +234,7 @@ function App() {
           ? item.likes.includes(currentUser._id)
           : false,
         likes: Array.isArray(item.likes) ? item.likes : [], // always ensure likes is an array
-      }))
+      })),
     );
   }, [currentUser]);
 
@@ -321,8 +321,8 @@ function App() {
               const likesArray = Array.isArray(updatedCard.likes)
                 ? updatedCard.likes
                 : isLiked
-                ? item.likes.filter((uid) => uid !== currentUser?._id) // remove currentUser from likes
-                : [...(item.likes || []), currentUser?._id]; // add currentUser to likes
+                  ? item.likes.filter((uid) => uid !== currentUser?._id) // remove currentUser from likes
+                  : [...(item.likes || []), currentUser?._id]; // add currentUser to likes
               return {
                 ...item, // Preserve all existing properties (including the image)
                 ...updatedCard, // Overwrite with latest API data
@@ -337,7 +337,7 @@ function App() {
               };
             }
             return item;
-          })
+          }),
         );
       })
       .catch((err) => console.log(err));
@@ -362,7 +362,6 @@ function App() {
               handleSignUp={handleSignUp}
               handleSignIn={handleSignIn}
             />
-
             <Routes>
               <Route
                 path="/"
