@@ -37,7 +37,7 @@ function authorizedFetch(
 
 /* Items */
 function getItems() {
-  console.log(baseUrl);
+  // console.log(baseUrl);
   return fetch(`${baseUrl}/items`).then(checkResponse);
 }
 function postItems(payload, token) {
@@ -45,6 +45,14 @@ function postItems(payload, token) {
 }
 function deleteItems(id, token) {
   return authorizedFetch(`/items/${id}`, { method: "DELETE" }, token);
+}
+
+function addCardLike(id, token) {
+  return authorizedFetch(`/items/${id}/likes`, { method: "PUT" }, token);
+}
+
+function removeCardLike(id, token) {
+  return authorizedFetch(`/items/${id}/likes`, { method: "DELETE" }, token);
 }
 
 /* Auth / User */
@@ -84,4 +92,6 @@ export {
   signIn,
   getUser,
   updateUser,
+  addCardLike,
+  removeCardLike,
 };

@@ -115,6 +115,8 @@ export const coordinates = {
 // Weather API key
 export const APIkey = "0c122f2434c6a317ae8c6887fccff822";
 
+// baseUrl location
+
 // Vite is picky, so instead of this:
 
 // const baseUrl = process.env.NODE_ENV === "production"
@@ -126,7 +128,7 @@ export const APIkey = "0c122f2434c6a317ae8c6887fccff822";
 // That is not equipped for Vite so I created a .env file and typed
 // in the 'VITE_NODE_ENV=production' in the .env file.
 
-// Also had to type the command 'npm run build' then run 'npm run dev'.
+// Also had to type the command 'npm run build' FIRST. Then run 'npm run dev' second.
 
 const baseUrl =
   import.meta.env.VITE_NODE_ENV === "production"

@@ -309,7 +309,21 @@ function App() {
     const token = localStorage.getItem("jwt");
     const apiMethod = !isLiked ? api.addCardLike : api.removeCardLike;
 
-    apiMethod(id, token)
+    // Debugging: ensure the api methods exist and avoid calling undefined
+    // console.log(
+    //   "api.addCardLike",
+    //   api.addCardLike,
+    //   "api.removeCardLike",
+    //   api.removeCardLike,
+    //   "chosen apiMethod",
+    //   apiMethod,
+    // );
+    if (typeof apiMethod !== "function") {
+      console.error("Like API method is not a function", apiMethod);
+      return Promise.resolve();
+    }
+
+    return apiMethod(id, token)
       .then((updatedCard) => {
         console.log("API response:", updatedCard);
         setClothingItems((cards) =>
